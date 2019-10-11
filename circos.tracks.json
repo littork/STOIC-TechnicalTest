@@ -1,0 +1,2334 @@
+[
+  {
+    "id": "chords",
+    "name": {
+      "globalize": {
+        "en": "Chords",
+        "fr": "Cordes"
+      }
+    },
+    "term": "circos-chords",
+    "data": [
+      {
+        "id": "source",
+        "name": {
+          "globalize": {
+            "en": "Source",
+            "fr": "Source"
+          }
+        },
+        "datatype": "object",
+        "options": {
+          "schema": [
+            {
+              "id": "id",
+              "name": {
+                "globalize": {
+                  "en": "Identifier",
+                  "fr": "Identifieur"
+                }
+              },
+              "datatype": "identifier",
+              "required": true
+            },
+            {
+              "id": "start",
+              "name": {
+                "globalize": {
+                  "en": "Start",
+                  "fr": "Début"
+                }
+              },
+              "datatype": "number",
+              "required": true
+            },
+            {
+              "id": "end",
+              "name": {
+                "globalize": {
+                  "en": "End",
+                  "fr": "Fin"
+                }
+              },
+              "datatype": "number",
+              "required": true
+            }
+          ]
+        }
+      },
+      {
+        "id": "target",
+        "name": {
+          "globalize": {
+            "en": "Target",
+            "fr": "Destination"
+          }
+        },
+        "datatype": "object",
+        "options": {
+          "schema": [
+            {
+              "id": "id",
+              "name": {
+                "globalize": {
+                  "en": "Identifier",
+                  "fr": "Identifieur"
+                }
+              },
+              "datatype": "identifier",
+              "required": true
+            },
+            {
+              "id": "start",
+              "name": {
+                "globalize": {
+                  "en": "Start",
+                  "fr": "Début"
+                }
+              },
+              "datatype": "number",
+              "required": true
+            },
+            {
+              "id": "end",
+              "name": {
+                "globalize": {
+                  "en": "End",
+                  "fr": "Fin"
+                }
+              },
+              "datatype": "number",
+              "required": true
+            }
+          ]
+        }
+      },
+      {
+        "id": "value",
+        "name": {
+          "globalize": {
+            "en": "Value",
+            "fr": "Valeur"
+          }
+        },
+        "datatype": "number",
+        "required": false
+      }
+    ],
+    "params": [
+      {
+        "id": "min",
+        "name": {
+          "globalize": {
+            "en": "Minimum",
+            "fr": "Minimum"
+          }
+        },
+        "control": "number",
+        "description": {
+          "globalize": {
+            "en": "Explicit minimum value for the dataset (computed from actual data by default).",
+            "fr": "Valeur minimale explicite pour le jeu de données (calculée à partir de la donnée par défaut)."
+          }
+        }
+      },
+      {
+        "id": "max",
+        "name": {
+          "globalize": {
+            "en": "Maximum",
+            "fr": "Maximum"
+          }
+        },
+        "control": "number",
+        "description": {
+          "globalize": {
+            "en": "Explicit maximum value for the dataset (computed from actual data by default).",
+            "fr": "Valeur maximale explicite pour le jeu de données (calculée à partir de la donnée par défaut)."
+          }
+        }
+      },
+      {
+        "id": "radius",
+        "name": {
+          "globalize": {
+            "en": "Radius",
+            "fr": "Rayon"
+          }
+        },
+        "control": "number",
+        "description": {
+          "globalize": {
+            "en": "Radius of the cords. By default, it is equal to the layout inner radius. If greater than 1, it is interpreted as a number of pixel from the center. Otherwise, it is interpreted as a fraction of the layout inner radius.",
+            "fr": "Rayon des cordes. Par défaut, il est égal au rayon intérieur de la disposition. Si supérieur à 1, il est interprété comme un nombre de pixel depuis le centre. Sinon, il est interprété comme une fraction du rayon intérieur de la disposition."
+          }
+        }
+      },
+      {
+        "id": "logScale",
+        "name": {
+          "globalize": {
+            "en": "Log Scale",
+            "fr": "Échelle logarithmique"
+          }
+        },
+        "control": "boolean",
+        "description": {
+          "globalize": {
+            "en": "Whether to use a logarithmic scale.",
+            "fr": "Configurer si une échelle logarithmique doit être utilisée."
+          }
+        }
+      },
+      {
+        "id": "logScaleBase",
+        "name": {
+          "globalize": {
+            "en": "Log Base",
+            "fr": "Base logarithmique"
+          }
+        },
+        "control": "number",
+        "description": {
+          "globalize": {
+            "en": "Base of the logarithmic scale.",
+            "fr": "Base de l'échelle logarithmique."
+          }
+        }
+      },
+      {
+        "id": "color",
+        "name": {
+          "globalize": {
+            "en": "Color",
+            "fr": "Couleur"
+          }
+        },
+        "control": "color",
+        "description": {
+          "globalize": {
+            "en": "Color of the chords.",
+            "fr": "Couleur des cordes."
+          }
+        }
+      },
+      {
+        "id": "opacity",
+        "name": {
+          "globalize": {
+            "en": "Opacity",
+            "fr": "Opacité"
+          }
+        },
+        "control": "number",
+        "options": {
+          "minimum": 0,
+          "maximum": 1
+        },
+        "description": {
+          "globalize": {
+            "en": "Opacity of the chords.",
+            "fr": "Opacité des cordes."
+          }
+        }
+      },
+      {
+        "id": "zIndex",
+        "name": {
+          "globalize": {
+            "en": "Z-Index",
+            "fr": "Élévation"
+          }
+        },
+        "control": "integer",
+        "description": {
+          "globalize": {
+            "en": "Z-Index of the chords.",
+            "fr": "Élévation des cordes."
+          }
+        }
+      },
+      {
+        "id": "tooltipContent",
+        "name": {
+          "globalize": {
+            "en": "Tooltip",
+            "fr": "Infobulle"
+          }
+        },
+        "control": "expression",
+        "description": {
+          "globalize": {
+            "en": "Expression taking datum and index as input, and returning a string displayed in the tooltip (HTML is supported).",
+            "fr": "Expression prenant la donnée et l'index en entrée et retournant une chaîne de charactères affichée dans l'infobulle (HTML est supporté)."
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "heatmap",
+    "name": {
+      "globalize": {
+        "en": "Heatmap",
+        "fr": "Carte de chaleur"
+      }
+    },
+    "term": "circos-heatmap",
+    "data": [
+      {
+        "id": "block_id",
+        "name": {
+          "globalize": {
+            "en": "Block",
+            "fr": "Bloc"
+          }
+        },
+        "datatype": "identifier",
+        "required": true
+      },
+      {
+        "id": "start",
+        "name": {
+          "globalize": {
+            "en": "Start",
+            "fr": "Début"
+          }
+        },
+        "datatype": "number",
+        "required": true
+      },
+      {
+        "id": "end",
+        "name": {
+          "globalize": {
+            "en": "End",
+            "fr": "Fin"
+          }
+        },
+        "datatype": "number",
+        "required": true
+      },
+      {
+        "id": "value",
+        "name": {
+          "globalize": {
+            "en": "Value",
+            "fr": "Valeur"
+          }
+        },
+        "datatype": "number",
+        "required": true
+      }
+    ],
+    "params": [
+      {
+        "id": "min",
+        "name": {
+          "globalize": {
+            "en": "Minimum",
+            "fr": "Minimum"
+          }
+        },
+        "control": "number",
+        "description": {
+          "globalize": {
+            "en": "Explicit minimum value for the dataset (computed from actual data by default).",
+            "fr": "Valeur minimale explicite pour le jeu de données (calculée à partir de la donnée par défaut)."
+          }
+        }
+      },
+      {
+        "id": "max",
+        "name": {
+          "globalize": {
+            "en": "Maximum",
+            "fr": "Maximum"
+          }
+        },
+        "control": "number",
+        "description": {
+          "globalize": {
+            "en": "Explicit maximum value for the dataset (computed from actual data by default).",
+            "fr": "Valeur maximale explicite pour le jeu de données (calculée à partir de la donnée par défaut)."
+          }
+        }
+      },
+      {
+        "id": "innerRadius",
+        "name": {
+          "globalize": {
+            "en": "Inner Radius",
+            "fr": "Rayon intérieur"
+          }
+        },
+        "control": "number",
+        "description": {
+          "globalize": {
+            "en": "Inner radius in pixels.",
+            "fr": "Rayon intérieur en pixels."
+          }
+        }
+      },
+      {
+        "id": "outerRadius",
+        "name": {
+          "globalize": {
+            "en": "Outer Radius",
+            "fr": "Rayon extérieur"
+          }
+        },
+        "control": "number",
+        "description": {
+          "globalize": {
+            "en": "Outer radius in pixels.",
+            "fr": "Rayon extérieur en pixels."
+          }
+        }
+      },
+      {
+        "id": "logScale",
+        "name": {
+          "globalize": {
+            "en": "Log Scale",
+            "fr": "Échelle logarithmique"
+          }
+        },
+        "control": "boolean",
+        "description": {
+          "globalize": {
+            "en": "Whether to use a logarithmic scale.",
+            "fr": "Configurer si une échelle logarithmique doit être utilisée."
+          }
+        }
+      },
+      {
+        "id": "color",
+        "name": {
+          "globalize": {
+            "en": "Palette",
+            "fr": "Palette"
+          }
+        },
+        "control": "palette",
+        "description": {
+          "globalize": {
+            "en": "Color palette of the heatmap.",
+            "fr": "Palette de couleurs de la carte de chaleur."
+          }
+        }
+      },
+      {
+        "id": "tooltipContent",
+        "name": {
+          "globalize": {
+            "en": "Tooltip",
+            "fr": "Infobulle"
+          }
+        },
+        "control": "expression",
+        "description": {
+          "globalize": {
+            "en": "Expression taking datum and index as input, and returning a string displayed in the tooltip (HTML is supported).",
+            "fr": "Expression prenant la donnée et l'index en entrée et retournant une chaîne de charactères affichée dans l'infobulle (HTML est supporté)."
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "highlight",
+    "name": {
+      "globalize": {
+        "en": "Highlight",
+        "fr": "Surlignage"
+      }
+    },
+    "term": "circos-highlight",
+    "data": [
+      {
+        "id": "block_id",
+        "name": {
+          "globalize": {
+            "en": "Block",
+            "fr": "Bloc"
+          }
+        },
+        "datatype": "identifier",
+        "required": true
+      },
+      {
+        "id": "start",
+        "name": {
+          "globalize": {
+            "en": "Start",
+            "fr": "Début"
+          }
+        },
+        "datatype": "number",
+        "required": true
+      },
+      {
+        "id": "end",
+        "name": {
+          "globalize": {
+            "en": "End",
+            "fr": "Fin"
+          }
+        },
+        "datatype": "number",
+        "required": true
+      }
+    ],
+    "params": [
+      {
+        "id": "min",
+        "name": {
+          "globalize": {
+            "en": "Minimum",
+            "fr": "Minimum"
+          }
+        },
+        "control": "number",
+        "description": {
+          "globalize": {
+            "en": "Explicit minimum value for the dataset (computed from actual data by default).",
+            "fr": "Valeur minimale explicite pour le jeu de données (calculée à partir de la donnée par défaut)."
+          }
+        }
+      },
+      {
+        "id": "max",
+        "name": {
+          "globalize": {
+            "en": "Maximum",
+            "fr": "Maximum"
+          }
+        },
+        "control": "number",
+        "description": {
+          "globalize": {
+            "en": "Explicit maximum value for the dataset (computed from actual data by default).",
+            "fr": "Valeur maximale explicite pour le jeu de données (calculée à partir de la donnée par défaut)."
+          }
+        }
+      },
+      {
+        "id": "innerRadius",
+        "name": {
+          "globalize": {
+            "en": "Inner Radius",
+            "fr": "Rayon intérieur"
+          }
+        },
+        "control": "number",
+        "description": {
+          "globalize": {
+            "en": "Inner radius in pixels.",
+            "fr": "Rayon intérieur en pixels."
+          }
+        }
+      },
+      {
+        "id": "outerRadius",
+        "name": {
+          "globalize": {
+            "en": "Outer Radius",
+            "fr": "Rayon extérieur"
+          }
+        },
+        "control": "number",
+        "description": {
+          "globalize": {
+            "en": "Outer radius in pixels.",
+            "fr": "Rayon extérieur en pixels."
+          }
+        }
+      },
+      {
+        "id": "logScale",
+        "name": {
+          "globalize": {
+            "en": "Log Scale",
+            "fr": "Échelle logarithmique"
+          }
+        },
+        "control": "boolean",
+        "description": {
+          "globalize": {
+            "en": "Whether to use a logarithmic scale.",
+            "fr": "Configurer si une échelle logarithmique doit être utilisée."
+          }
+        }
+      },
+      {
+        "id": "color",
+        "name": {
+          "globalize": {
+            "en": "Color",
+            "fr": "Couleur"
+          }
+        },
+        "control": "color",
+        "description": {
+          "globalize": {
+            "en": "Color of the highlight.",
+            "fr": "Couleur du surlignage."
+          }
+        }
+      },
+      {
+        "id": "opacity",
+        "name": {
+          "globalize": {
+            "en": "Opacity",
+            "fr": "Opacité"
+          }
+        },
+        "control": "number",
+        "options": {
+          "minimum": 0,
+          "maximum": 1
+        },
+        "description": {
+          "globalize": {
+            "en": "Opacity of the highlight.",
+            "fr": "Opacité du surlignage."
+          }
+        }
+      },
+      {
+        "id": "strokeColor",
+        "name": {
+          "globalize": {
+            "en": "Stroke Color",
+            "fr": "Couleur du trait"
+          }
+        },
+        "control": "color",
+        "description": {
+          "globalize": {
+            "en": "Color of the stroke.",
+            "fr": "Couleur du trait."
+          }
+        }
+      },
+      {
+        "id": "strokeWidth",
+        "name": {
+          "globalize": {
+            "en": "Stroke Width",
+            "fr": "Épaisseur du trait"
+          }
+        },
+        "control": "number",
+        "description": {
+          "globalize": {
+            "en": "Width of the stroke.",
+            "fr": "Épaisseur du trait."
+          }
+        }
+      },
+      {
+        "id": "tooltipContent",
+        "name": {
+          "globalize": {
+            "en": "Tooltip",
+            "fr": "Infobulle"
+          }
+        },
+        "control": "expression",
+        "description": {
+          "globalize": {
+            "en": "Expression taking datum and index as input, and returning a string displayed in the tooltip (HTML is supported).",
+            "fr": "Expression prenant la donnée et l'index en entrée et retournant une chaîne de charactères affichée dans l'infobulle (HTML est supporté)."
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "histogram",
+    "name": {
+      "globalize": {
+        "en": "Bars",
+        "fr": "Barres"
+      }
+    },
+    "term": "circos-bars",
+    "data": [
+      {
+        "id": "block_id",
+        "name": {
+          "globalize": {
+            "en": "Block",
+            "fr": "Bloc"
+          }
+        },
+        "datatype": "identifier",
+        "required": true
+      },
+      {
+        "id": "start",
+        "name": {
+          "globalize": {
+            "en": "Start",
+            "fr": "Début"
+          }
+        },
+        "datatype": "number",
+        "required": true
+      },
+      {
+        "id": "end",
+        "name": {
+          "globalize": {
+            "en": "End",
+            "fr": "Fin"
+          }
+        },
+        "datatype": "number",
+        "required": true
+      },
+      {
+        "id": "value",
+        "name": {
+          "globalize": {
+            "en": "Value",
+            "fr": "Valeur"
+          }
+        },
+        "datatype": "number",
+        "required": true
+      }
+    ],
+    "params": [
+      {
+        "id": "min",
+        "name": {
+          "globalize": {
+            "en": "Minimum",
+            "fr": "Minimum"
+          }
+        },
+        "control": "number",
+        "description": {
+          "globalize": {
+            "en": "Explicit minimum value for the dataset (computed from actual data by default).",
+            "fr": "Valeur minimale explicite pour le jeu de données (calculée à partir de la donnée par défaut)."
+          }
+        }
+      },
+      {
+        "id": "max",
+        "name": {
+          "globalize": {
+            "en": "Maximum",
+            "fr": "Maximum"
+          }
+        },
+        "control": "number",
+        "description": {
+          "globalize": {
+            "en": "Explicit maximum value for the dataset (computed from actual data by default).",
+            "fr": "Valeur maximale explicite pour le jeu de données (calculée à partir de la donnée par défaut)."
+          }
+        }
+      },
+      {
+        "id": "innerRadius",
+        "name": {
+          "globalize": {
+            "en": "Inner Radius",
+            "fr": "Rayon intérieur"
+          }
+        },
+        "control": "number",
+        "description": {
+          "globalize": {
+            "en": "Inner radius in pixels.",
+            "fr": "Rayon intérieur en pixels."
+          }
+        }
+      },
+      {
+        "id": "outerRadius",
+        "name": {
+          "globalize": {
+            "en": "Outer Radius",
+            "fr": "Rayon extérieur"
+          }
+        },
+        "control": "number",
+        "description": {
+          "globalize": {
+            "en": "Outer radius in pixels.",
+            "fr": "Rayon extérieur en pixels."
+          }
+        }
+      },
+      {
+        "id": "logScale",
+        "name": {
+          "globalize": {
+            "en": "Log Scale",
+            "fr": "Échelle logarithmique"
+          }
+        },
+        "control": "boolean",
+        "description": {
+          "globalize": {
+            "en": "Whether to use a logarithmic scale.",
+            "fr": "Configurer si une échelle logarithmique doit être utilisée."
+          }
+        }
+      },
+      {
+        "id": "logScaleBase",
+        "name": {
+          "globalize": {
+            "en": "Log Base",
+            "fr": "Base logarithmique"
+          }
+        },
+        "control": "number",
+        "description": {
+          "globalize": {
+            "en": "Base of the logarithmic scale.",
+            "fr": "Base de l'échelle logarithmique."
+          }
+        }
+      },
+      {
+        "id": "color",
+        "name": {
+          "globalize": {
+            "en": "Color",
+            "fr": "Couleur"
+          }
+        },
+        "control": "color",
+        "description": {
+          "globalize": {
+            "en": "Color of the chords.",
+            "fr": "Couleur des cordes."
+          }
+        }
+      },
+      {
+        "id": "opacity",
+        "name": {
+          "globalize": {
+            "en": "Opacity",
+            "fr": "Opacité"
+          }
+        },
+        "control": "number",
+        "options": {
+          "minimum": 0,
+          "maximum": 1
+        },
+        "description": {
+          "globalize": {
+            "en": "Opacity of the bars.",
+            "fr": "Opacité des barres."
+          }
+        }
+      },
+      {
+        "id": "zIndex",
+        "name": {
+          "globalize": {
+            "en": "Z-Index",
+            "fr": "Élévation"
+          }
+        },
+        "control": "integer",
+        "description": {
+          "globalize": {
+            "en": "Z-Index of the bars.",
+            "fr": "Élévation des barres."
+          }
+        }
+      },
+      {
+        "id": "tooltipContent",
+        "name": {
+          "globalize": {
+            "en": "Tooltip",
+            "fr": "Infobulle"
+          }
+        },
+        "control": "expression",
+        "description": {
+          "globalize": {
+            "en": "Expression taking datum and index as input, and returning a string displayed in the tooltip (HTML is supported).",
+            "fr": "Expression prenant la donnée et l'index en entrée et retournant une chaîne de charactères affichée dans l'infobulle (HTML est supporté)."
+          }
+        }
+      },
+      {
+        "id": "grid",
+        "name": {
+          "globalize": {
+            "en": "Grid",
+            "fr": "Grille"
+          }
+        },
+        "control": "collection",
+        "options": {
+          "schema": [
+            {
+              "id": "spacing",
+              "name": {
+                "globalize": {
+                  "en": "Spacing",
+                  "fr": "Espacement"
+                }
+              },
+              "datatype": "number"
+            },
+            {
+              "id": "start",
+              "name": {
+                "globalize": {
+                  "en": "Start",
+                  "fr": "Début"
+                }
+              },
+              "datatype": "number"
+            },
+            {
+              "id": "end",
+              "name": {
+                "globalize": {
+                  "en": "End",
+                  "fr": "Fin"
+                }
+              },
+              "datatype": "number"
+            },
+            {
+              "id": "color",
+              "name": {
+                "globalize": {
+                  "en": "Color",
+                  "fr": "Couleur"
+                }
+              },
+              "datatype": "color"
+            },
+            {
+              "id": "thickness",
+              "name": {
+                "globalize": {
+                  "en": "Thickness",
+                  "fr": "Épaisseur"
+                }
+              },
+              "datatype": "number"
+            }
+          ]
+        },
+        "description": {
+          "globalize": {
+            "en": "Axis grid configuration.",
+            "fr": "Configuration de la grille axiale."
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "line",
+    "name": {
+      "globalize": {
+        "en": "Line",
+        "fr": "Ligne"
+      }
+    },
+    "term": "circos-line",
+    "data": [
+      {
+        "id": "block_id",
+        "name": {
+          "globalize": {
+            "en": "Block",
+            "fr": "Bloc"
+          }
+        },
+        "datatype": "identifier",
+        "required": true
+      },
+      {
+        "id": "position",
+        "name": {
+          "globalize": {
+            "en": "Position",
+            "fr": "Position"
+          }
+        },
+        "datatype": "number",
+        "required": true
+      },
+      {
+        "id": "value",
+        "name": {
+          "globalize": {
+            "en": "Value",
+            "fr": "Valeur"
+          }
+        },
+        "datatype": "number",
+        "required": true
+      }
+    ],
+    "params": [
+      {
+        "id": "min",
+        "name": {
+          "globalize": {
+            "en": "Minimum",
+            "fr": "Minimum"
+          }
+        },
+        "control": "number",
+        "description": {
+          "globalize": {
+            "en": "Explicit minimum value for the dataset (computed from actual data by default).",
+            "fr": "Valeur minimale explicite pour le jeu de données (calculée à partir de la donnée par défaut)."
+          }
+        }
+      },
+      {
+        "id": "max",
+        "name": {
+          "globalize": {
+            "en": "Maximum",
+            "fr": "Maximum"
+          }
+        },
+        "control": "number",
+        "description": {
+          "globalize": {
+            "en": "Explicit maximum value for the dataset (computed from actual data by default).",
+            "fr": "Valeur maximale explicite pour le jeu de données (calculée à partir de la donnée par défaut)."
+          }
+        }
+      },
+      {
+        "id": "innerRadius",
+        "name": {
+          "globalize": {
+            "en": "Inner Radius",
+            "fr": "Rayon intérieur"
+          }
+        },
+        "control": "number",
+        "description": {
+          "globalize": {
+            "en": "Inner radius in pixels.",
+            "fr": "Rayon intérieur en pixels."
+          }
+        }
+      },
+      {
+        "id": "outerRadius",
+        "name": {
+          "globalize": {
+            "en": "Outer Radius",
+            "fr": "Rayon extérieur"
+          }
+        },
+        "control": "number",
+        "description": {
+          "globalize": {
+            "en": "Outer radius in pixels.",
+            "fr": "Rayon extérieur en pixels."
+          }
+        }
+      },
+      {
+        "id": "logScale",
+        "name": {
+          "globalize": {
+            "en": "Log Scale",
+            "fr": "Échelle logarithmique"
+          }
+        },
+        "control": "boolean",
+        "description": {
+          "globalize": {
+            "en": "Whether to use a logarithmic scale.",
+            "fr": "Configurer si une échelle logarithmique doit être utilisée."
+          }
+        }
+      },
+      {
+        "id": "logScaleBase",
+        "name": {
+          "globalize": {
+            "en": "Log Base",
+            "fr": "Base logarithmique"
+          }
+        },
+        "control": "number",
+        "description": {
+          "globalize": {
+            "en": "Base of the logarithmic scale.",
+            "fr": "Base de l'échelle logarithmique."
+          }
+        }
+      },
+      {
+        "id": "color",
+        "name": {
+          "globalize": {
+            "en": "Color",
+            "fr": "Couleur"
+          }
+        },
+        "control": "color",
+        "description": {
+          "globalize": {
+            "en": "Color of the chords.",
+            "fr": "Couleur des cordes."
+          }
+        }
+      },
+      {
+        "id": "opacity",
+        "name": {
+          "globalize": {
+            "en": "Opacity",
+            "fr": "Opacité"
+          }
+        },
+        "control": "number",
+        "options": {
+          "minimum": 0,
+          "maximum": 1
+        },
+        "description": {
+          "globalize": {
+            "en": "Opacity of the line.",
+            "fr": "Opacité de la ligne."
+          }
+        }
+      },
+      {
+        "id": "zIndex",
+        "name": {
+          "globalize": {
+            "en": "Z-Index",
+            "fr": "Élévation"
+          }
+        },
+        "control": "integer",
+        "description": {
+          "globalize": {
+            "en": "Z-Index of the line.",
+            "fr": "Élévation de la ligne."
+          }
+        }
+      },
+      {
+        "id": "strokeColor",
+        "name": {
+          "globalize": {
+            "en": "Stroke Color",
+            "fr": "Couleur du trait"
+          }
+        },
+        "control": "color",
+        "description": {
+          "globalize": {
+            "en": "Color of the stroke.",
+            "fr": "Couleur du trait."
+          }
+        }
+      },
+      {
+        "id": "strokeWidth",
+        "name": {
+          "globalize": {
+            "en": "Stroke Width",
+            "fr": "Épaisseur du trait"
+          }
+        },
+        "control": "number",
+        "description": {
+          "globalize": {
+            "en": "Width of the stroke.",
+            "fr": "Épaisseur du trait."
+          }
+        }
+      },
+      {
+        "id": "direction",
+        "name": {
+          "globalize": {
+            "en": "Direction",
+            "fr": "Direction"
+          }
+        },
+        "control": "category",
+        "options": {
+          "categories": [
+            {
+              "id": "in",
+              "name": {
+                "globalize": {
+                  "en": "In",
+                  "fr": "Intérieur"
+                }
+              }
+            },
+            {
+              "id": "out",
+              "name": {
+                "globalize": {
+                  "en": "Out",
+                  "fr": "Extérieur"
+                }
+              }
+            }
+          ]
+        },
+        "default": "out",
+        "description": {
+          "globalize": {
+            "en": "Direction of the line.",
+            "fr": "Direction de la ligne."
+          }
+        }
+      },
+      {
+        "id": "fill",
+        "name": {
+          "globalize": {
+            "en": "Filled",
+            "fr": "Remplie"
+          }
+        },
+        "control": "boolean",
+        "description": {
+          "globalize": {
+            "en": "Whether the line is filled.",
+            "fr": "Configurer si la ligne est remplie."
+          }
+        }
+      },
+      {
+        "id": "fillColor",
+        "name": {
+          "globalize": {
+            "en": "Fill Color",
+            "fr": "Couleur du remplissage"
+          }
+        },
+        "control": "color",
+        "description": {
+          "globalize": {
+            "en": "Color of the line fill.",
+            "fr": "Couleur du remplissage de la ligne."
+          }
+        }
+      },
+      {
+        "id": "tooltipContent",
+        "name": {
+          "globalize": {
+            "en": "Tooltip",
+            "fr": "Infobulle"
+          }
+        },
+        "control": "expression",
+        "description": {
+          "globalize": {
+            "en": "Expression taking datum and index as input, and returning a string displayed in the tooltip (HTML is supported).",
+            "fr": "Expression prenant la donnée et l'index en entrée et retournant une chaîne de charactères affichée dans l'infobulle (HTML est supporté)."
+          }
+        }
+      },
+      {
+        "id": "background",
+        "name": {
+          "globalize": {
+            "en": "Background",
+            "fr": "Fond"
+          }
+        },
+        "control": "collection",
+        "options": {
+          "schema": [
+            {
+              "id": "start",
+              "name": {
+                "globalize": {
+                  "en": "Start",
+                  "fr": "Début"
+                }
+              },
+              "datatype": "number"
+            },
+            {
+              "id": "end",
+              "name": {
+                "globalize": {
+                  "en": "End",
+                  "fr": "Fin"
+                }
+              },
+              "datatype": "number"
+            },
+            {
+              "id": "color",
+              "name": {
+                "globalize": {
+                  "en": "Color",
+                  "fr": "Couleur"
+                }
+              },
+              "datatype": "color"
+            },
+            {
+              "id": "opacity",
+              "name": {
+                "globalize": {
+                  "en": "Opacity",
+                  "fr": "Opacité"
+                }
+              },
+              "datatype": "number"
+            }
+          ]
+        },
+        "description": {
+          "globalize": {
+            "en": "Axis grid configuration.",
+            "fr": "Configuration de la grille axiale."
+          }
+        }
+      },
+      {
+        "id": "grid",
+        "name": {
+          "globalize": {
+            "en": "Grid",
+            "fr": "Grille"
+          }
+        },
+        "control": "collection",
+        "options": {
+          "schema": [
+            {
+              "id": "color",
+              "name": {
+                "globalize": {
+                  "en": "Color",
+                  "fr": "Couleur"
+                }
+              },
+              "datatype": "color"
+            },
+            {
+              "id": "thickness",
+              "name": {
+                "globalize": {
+                  "en": "Thickness",
+                  "fr": "Épaisseur"
+                }
+              },
+              "datatype": "number"
+            },
+            {
+              "id": "spacing",
+              "name": {
+                "globalize": {
+                  "en": "Spacing",
+                  "fr": "Espacement"
+                }
+              },
+              "datatype": "number"
+            },
+            {
+              "id": "start",
+              "name": {
+                "globalize": {
+                  "en": "Start",
+                  "fr": "Début"
+                }
+              },
+              "datatype": "number"
+            },
+            {
+              "id": "end",
+              "name": {
+                "globalize": {
+                  "en": "End",
+                  "fr": "Fin"
+                }
+              },
+              "datatype": "number"
+            }
+          ]
+        },
+        "description": {
+          "globalize": {
+            "en": "Axis grid configuration.",
+            "fr": "Configuration de la grille axiale."
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "scatter",
+    "name": {
+      "globalize": {
+        "en": "Scatter",
+        "fr": "Nuage de points"
+      }
+    },
+    "term": "circos-scatter",
+    "data": [
+      {
+        "id": "block_id",
+        "name": {
+          "globalize": {
+            "en": "Block",
+            "fr": "Bloc"
+          }
+        },
+        "datatype": "identifier",
+        "required": true
+      },
+      {
+        "id": "position",
+        "name": {
+          "globalize": {
+            "en": "Position",
+            "fr": "Position"
+          }
+        },
+        "datatype": "number",
+        "required": true
+      },
+      {
+        "id": "value",
+        "name": {
+          "globalize": {
+            "en": "Value",
+            "fr": "Valeur"
+          }
+        },
+        "datatype": "number",
+        "required": true
+      }
+    ],
+    "params": [
+      {
+        "id": "min",
+        "name": {
+          "globalize": {
+            "en": "Minimum",
+            "fr": "Minimum"
+          }
+        },
+        "control": "number",
+        "description": {
+          "globalize": {
+            "en": "Explicit minimum value for the dataset (computed from actual data by default).",
+            "fr": "Valeur minimale explicite pour le jeu de données (calculée à partir de la donnée par défaut)."
+          }
+        }
+      },
+      {
+        "id": "max",
+        "name": {
+          "globalize": {
+            "en": "Maximum",
+            "fr": "Maximum"
+          }
+        },
+        "control": "number",
+        "description": {
+          "globalize": {
+            "en": "Explicit maximum value for the dataset (computed from actual data by default).",
+            "fr": "Valeur maximale explicite pour le jeu de données (calculée à partir de la donnée par défaut)."
+          }
+        }
+      },
+      {
+        "id": "innerRadius",
+        "name": {
+          "globalize": {
+            "en": "Inner Radius",
+            "fr": "Rayon intérieur"
+          }
+        },
+        "control": "number",
+        "description": {
+          "globalize": {
+            "en": "Inner radius in pixels.",
+            "fr": "Rayon intérieur en pixels."
+          }
+        }
+      },
+      {
+        "id": "outerRadius",
+        "name": {
+          "globalize": {
+            "en": "Outer Radius",
+            "fr": "Rayon extérieur"
+          }
+        },
+        "control": "number",
+        "description": {
+          "globalize": {
+            "en": "Outer radius in pixels.",
+            "fr": "Rayon extérieur en pixels."
+          }
+        }
+      },
+      {
+        "id": "logScale",
+        "name": {
+          "globalize": {
+            "en": "Log Scale",
+            "fr": "Échelle logarithmique"
+          }
+        },
+        "control": "boolean",
+        "description": {
+          "globalize": {
+            "en": "Whether to use a logarithmic scale.",
+            "fr": "Configurer si une échelle logarithmique doit être utilisée."
+          }
+        }
+      },
+      {
+        "id": "logScaleBase",
+        "name": {
+          "globalize": {
+            "en": "Log Base",
+            "fr": "Base logarithmique"
+          }
+        },
+        "control": "number",
+        "description": {
+          "globalize": {
+            "en": "Base of the logarithmic scale.",
+            "fr": "Base de l'échelle logarithmique."
+          }
+        }
+      },
+      {
+        "id": "color",
+        "name": {
+          "globalize": {
+            "en": "Color",
+            "fr": "Couleur"
+          }
+        },
+        "control": "color",
+        "description": {
+          "globalize": {
+            "en": "Color of the chords.",
+            "fr": "Couleur des cordes."
+          }
+        }
+      },
+      {
+        "id": "opacity",
+        "name": {
+          "globalize": {
+            "en": "Opacity",
+            "fr": "Opacité"
+          }
+        },
+        "control": "number",
+        "options": {
+          "minimum": 0,
+          "maximum": 1
+        },
+        "description": {
+          "globalize": {
+            "en": "Opacity of the points.",
+            "fr": "Opacité des points."
+          }
+        }
+      },
+      {
+        "id": "zIndex",
+        "name": {
+          "globalize": {
+            "en": "Z-Index",
+            "fr": "Élévation"
+          }
+        },
+        "control": "integer",
+        "description": {
+          "globalize": {
+            "en": "Z-Index of the points.",
+            "fr": "Élévation des points."
+          }
+        }
+      },
+      {
+        "id": "strokeColor",
+        "name": {
+          "globalize": {
+            "en": "Stroke Color",
+            "fr": "Couleur du trait"
+          }
+        },
+        "control": "color",
+        "description": {
+          "globalize": {
+            "en": "Color of the stroke.",
+            "fr": "Couleur du trait."
+          }
+        }
+      },
+      {
+        "id": "strokeWidth",
+        "name": {
+          "globalize": {
+            "en": "Stroke Width",
+            "fr": "Épaisseur du trait"
+          }
+        },
+        "control": "number",
+        "description": {
+          "globalize": {
+            "en": "Width of the stroke.",
+            "fr": "Épaisseur du trait."
+          }
+        }
+      },
+      {
+        "id": "direction",
+        "name": {
+          "globalize": {
+            "en": "Direction",
+            "fr": "Direction"
+          }
+        },
+        "control": "category",
+        "options": {
+          "categories": [
+            {
+              "id": "in",
+              "name": {
+                "globalize": {
+                  "en": "In",
+                  "fr": "Intérieur"
+                }
+              }
+            },
+            {
+              "id": "out",
+              "name": {
+                "globalize": {
+                  "en": "Out",
+                  "fr": "Extérieur"
+                }
+              }
+            }
+          ]
+        },
+        "default": "out",
+        "description": {
+          "globalize": {
+            "en": "Direction of the line.",
+            "fr": "Direction de la ligne."
+          }
+        }
+      },
+      {
+        "id": "fill",
+        "name": {
+          "globalize": {
+            "en": "Filled",
+            "fr": "Remplie"
+          }
+        },
+        "control": "boolean",
+        "description": {
+          "globalize": {
+            "en": "Whether the point is filled.",
+            "fr": "Configurer si le point est rempli."
+          }
+        }
+      },
+      {
+        "id": "shape",
+        "name": {
+          "globalize": {
+            "en": "Shape",
+            "fr": "Figure"
+          }
+        },
+        "control": "category",
+        "options": {
+          "categories": [
+            {
+              "id": "circle",
+              "name": {
+                "globalize": {
+                  "en": "Circle",
+                  "fr": "Cercle"
+                }
+              }
+            },
+            {
+              "id": "cross",
+              "name": {
+                "globalize": {
+                  "en": "Cross",
+                  "fr": "Croix"
+                }
+              }
+            },
+            {
+              "id": "diamond",
+              "name": {
+                "globalize": {
+                  "en": "Diamond",
+                  "fr": "Losange"
+                }
+              }
+            },
+            {
+              "id": "square",
+              "name": {
+                "globalize": {
+                  "en": "Square",
+                  "fr": "Carré"
+                }
+              }
+            },
+            {
+              "id": "triangle",
+              "name": {
+                "globalize": {
+                  "en": "Triangle",
+                  "fr": "Triangle"
+                }
+              }
+            },
+            {
+              "id": "star",
+              "name": {
+                "globalize": {
+                  "en": "Star",
+                  "fr": "Étoile"
+                }
+              }
+            },
+            {
+              "id": "wye",
+              "name": {
+                "globalize": {
+                  "en": "Wye",
+                  "fr": "Y"
+                }
+              }
+            }
+          ]
+        },
+        "default": "circle",
+        "description": {
+          "globalize": {
+            "en": "Shape of the point.",
+            "fr": "Figure du point."
+          }
+        }
+      },
+      {
+        "id": "size",
+        "name": {
+          "globalize": {
+            "en": "Size",
+            "fr": "Taille"
+          }
+        },
+        "control": "number",
+        "description": {
+          "globalize": {
+            "en": "Size of the point.",
+            "fr": "Taille du point."
+          }
+        }
+      },
+      {
+        "id": "background",
+        "name": {
+          "globalize": {
+            "en": "Background",
+            "fr": "Fond"
+          }
+        },
+        "control": "collection",
+        "options": {
+          "schema": [
+            {
+              "id": "start",
+              "name": {
+                "globalize": {
+                  "en": "Start",
+                  "fr": "Début"
+                }
+              },
+              "datatype": "number"
+            },
+            {
+              "id": "end",
+              "name": {
+                "globalize": {
+                  "en": "End",
+                  "fr": "Fin"
+                }
+              },
+              "datatype": "number"
+            },
+            {
+              "id": "color",
+              "name": {
+                "globalize": {
+                  "en": "Color",
+                  "fr": "Couleur"
+                }
+              },
+              "datatype": "color"
+            },
+            {
+              "id": "opacity",
+              "name": {
+                "globalize": {
+                  "en": "Opacity",
+                  "fr": "Opacité"
+                }
+              },
+              "datatype": "number"
+            }
+          ]
+        },
+        "description": {
+          "globalize": {
+            "en": "Axis grid configuration.",
+            "fr": "Configuration de la grille axiale."
+          }
+        }
+      },
+      {
+        "id": "grid",
+        "name": {
+          "globalize": {
+            "en": "Grid",
+            "fr": "Grille"
+          }
+        },
+        "control": "collection",
+        "options": {
+          "schema": [
+            {
+              "id": "color",
+              "name": {
+                "globalize": {
+                  "en": "Color",
+                  "fr": "Couleur"
+                }
+              },
+              "datatype": "color"
+            },
+            {
+              "id": "thickness",
+              "name": {
+                "globalize": {
+                  "en": "Thickness",
+                  "fr": "Épaisseur"
+                }
+              },
+              "datatype": "number"
+            },
+            {
+              "id": "spacing",
+              "name": {
+                "globalize": {
+                  "en": "Spacing",
+                  "fr": "Espacement"
+                }
+              },
+              "datatype": "number"
+            },
+            {
+              "id": "start",
+              "name": {
+                "globalize": {
+                  "en": "Start",
+                  "fr": "Début"
+                }
+              },
+              "datatype": "number"
+            },
+            {
+              "id": "end",
+              "name": {
+                "globalize": {
+                  "en": "End",
+                  "fr": "Fin"
+                }
+              },
+              "datatype": "number"
+            }
+          ]
+        },
+        "description": {
+          "globalize": {
+            "en": "Axis grid configuration.",
+            "fr": "Configuration de la grille axiale."
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "stack",
+    "name": {
+      "globalize": {
+        "en": "Stack",
+        "fr": "Pile"
+      }
+    },
+    "term": "circos-stack",
+    "data": [
+      {
+        "id": "block_id",
+        "name": {
+          "globalize": {
+            "en": "Block",
+            "fr": "Bloc"
+          }
+        },
+        "datatype": "identifier",
+        "required": true
+      },
+      {
+        "id": "start",
+        "name": {
+          "globalize": {
+            "en": "Start",
+            "fr": "Début"
+          }
+        },
+        "datatype": "number",
+        "required": true
+      },
+      {
+        "id": "end",
+        "name": {
+          "globalize": {
+            "en": "End",
+            "fr": "Fin"
+          }
+        },
+        "datatype": "number",
+        "required": true
+      }
+    ],
+    "params": [
+      {
+        "id": "min",
+        "name": {
+          "globalize": {
+            "en": "Minimum",
+            "fr": "Minimum"
+          }
+        },
+        "control": "number",
+        "description": {
+          "globalize": {
+            "en": "Explicit minimum value for the dataset (computed from actual data by default).",
+            "fr": "Valeur minimale explicite pour le jeu de données (calculée à partir de la donnée par défaut)."
+          }
+        }
+      },
+      {
+        "id": "max",
+        "name": {
+          "globalize": {
+            "en": "Maximum",
+            "fr": "Maximum"
+          }
+        },
+        "control": "number",
+        "description": {
+          "globalize": {
+            "en": "Explicit maximum value for the dataset (computed from actual data by default).",
+            "fr": "Valeur maximale explicite pour le jeu de données (calculée à partir de la donnée par défaut)."
+          }
+        }
+      },
+      {
+        "id": "innerRadius",
+        "name": {
+          "globalize": {
+            "en": "Inner Radius",
+            "fr": "Rayon intérieur"
+          }
+        },
+        "control": "number",
+        "description": {
+          "globalize": {
+            "en": "Inner radius in pixels.",
+            "fr": "Rayon intérieur en pixels."
+          }
+        }
+      },
+      {
+        "id": "outerRadius",
+        "name": {
+          "globalize": {
+            "en": "Outer Radius",
+            "fr": "Rayon extérieur"
+          }
+        },
+        "control": "number",
+        "description": {
+          "globalize": {
+            "en": "Outer radius in pixels.",
+            "fr": "Rayon extérieur en pixels."
+          }
+        }
+      },
+      {
+        "id": "logScale",
+        "name": {
+          "globalize": {
+            "en": "Log Scale",
+            "fr": "Échelle logarithmique"
+          }
+        },
+        "control": "boolean",
+        "description": {
+          "globalize": {
+            "en": "Whether to use a logarithmic scale.",
+            "fr": "Configurer si une échelle logarithmique doit être utilisée."
+          }
+        }
+      },
+      {
+        "id": "color",
+        "name": {
+          "globalize": {
+            "en": "Palette",
+            "fr": "Palette"
+          }
+        },
+        "control": "palette",
+        "description": {
+          "globalize": {
+            "en": "Color palette of the heatmap.",
+            "fr": "Palette de couleurs de la carte de chaleur."
+          }
+        }
+      },
+      {
+        "id": "opacity",
+        "name": {
+          "globalize": {
+            "en": "Opacity",
+            "fr": "Opacité"
+          }
+        },
+        "control": "number",
+        "options": {
+          "minimum": 0,
+          "maximum": 1
+        },
+        "description": {
+          "globalize": {
+            "en": "Opacity of the stack.",
+            "fr": "Opacité de la pile."
+          }
+        }
+      },
+      {
+        "id": "strokeColor",
+        "name": {
+          "globalize": {
+            "en": "Stroke Color",
+            "fr": "Couleur du trait"
+          }
+        },
+        "control": "color",
+        "description": {
+          "globalize": {
+            "en": "Color of the stroke.",
+            "fr": "Couleur du trait."
+          }
+        }
+      },
+      {
+        "id": "strokeWidth",
+        "name": {
+          "globalize": {
+            "en": "Stroke Width",
+            "fr": "Épaisseur du trait"
+          }
+        },
+        "control": "number",
+        "description": {
+          "globalize": {
+            "en": "Width of the stroke.",
+            "fr": "Épaisseur du trait."
+          }
+        }
+      },
+      {
+        "id": "thickness",
+        "name": {
+          "globalize": {
+            "en": "Thickness",
+            "fr": "Épaisseur"
+          }
+        },
+        "control": "number",
+        "description": {
+          "globalize": {
+            "en": "Thickness of layers on the stack.",
+            "fr": "Épaisseur des couches sur la pile."
+          }
+        }
+      },
+      {
+        "id": "margin",
+        "name": {
+          "globalize": {
+            "en": "Polar Margin",
+            "fr": "Marge polaire"
+          }
+        },
+        "control": "number",
+        "description": {
+          "globalize": {
+            "en": "Polar margin between layers of the stack.",
+            "fr": "Marge polaire entre les couches de la pile."
+          }
+        }
+      },
+      {
+        "id": "radialMargin",
+        "name": {
+          "globalize": {
+            "en": "Radial Margin",
+            "fr": "Marge radiale"
+          }
+        },
+        "control": "number",
+        "description": {
+          "globalize": {
+            "en": "Radial margin between layers of the stack.",
+            "fr": "Marge radiale entre les couches de la pile."
+          }
+        }
+      },
+      {
+        "id": "direction",
+        "name": {
+          "globalize": {
+            "en": "Direction",
+            "fr": "Direction"
+          }
+        },
+        "control": "category",
+        "options": {
+          "categories": [
+            {
+              "id": "in",
+              "name": {
+                "globalize": {
+                  "en": "In",
+                  "fr": "Intérieur"
+                }
+              }
+            },
+            {
+              "id": "out",
+              "name": {
+                "globalize": {
+                  "en": "Out",
+                  "fr": "Extérieur"
+                }
+              }
+            },
+            {
+              "id": "center",
+              "name": {
+                "globalize": {
+                  "en": "Middle",
+                  "fr": "Milieu"
+                }
+              }
+            }
+          ]
+        },
+        "default": "out",
+        "description": {
+          "globalize": {
+            "en": "Direction of the stack.",
+            "fr": "Direction de la pile."
+          }
+        }
+      },
+      {
+        "id": "tooltipContent",
+        "name": {
+          "globalize": {
+            "en": "Tooltip",
+            "fr": "Infobulle"
+          }
+        },
+        "control": "expression",
+        "description": {
+          "globalize": {
+            "en": "Expression taking datum and index as input, and returning a string displayed in the tooltip (HTML is supported).",
+            "fr": "Expression prenant la donnée et l'index en entrée et retournant une chaîne de charactères affichée dans l'infobulle (HTML est supporté)."
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "text",
+    "name": {
+      "globalize": {
+        "en": "Text",
+        "fr": "Texte"
+      }
+    },
+    "term": "circos-text",
+    "data": [
+      {
+        "id": "block_id",
+        "name": {
+          "globalize": {
+            "en": "Block",
+            "fr": "Bloc"
+          }
+        },
+        "datatype": "identifier",
+        "required": true
+      },
+      {
+        "id": "position",
+        "name": {
+          "globalize": {
+            "en": "Position",
+            "fr": "Position"
+          }
+        },
+        "datatype": "number",
+        "required": true
+      },
+      {
+        "id": "value",
+        "name": {
+          "globalize": {
+            "en": "Value",
+            "fr": "Valeur"
+          }
+        },
+        "datatype": "string",
+        "required": true
+      }
+    ],
+    "params": [
+      {
+        "id": "innerRadius",
+        "name": {
+          "globalize": {
+            "en": "Inner Radius",
+            "fr": "Rayon intérieur"
+          }
+        },
+        "control": "number",
+        "description": {
+          "globalize": {
+            "en": "Inner radius in pixels.",
+            "fr": "Rayon intérieur en pixels."
+          }
+        }
+      },
+      {
+        "id": "outerRadius",
+        "name": {
+          "globalize": {
+            "en": "Outer Radius",
+            "fr": "Rayon extérieur"
+          }
+        },
+        "control": "number",
+        "description": {
+          "globalize": {
+            "en": "Outer radius in pixels.",
+            "fr": "Rayon extérieur en pixels."
+          }
+        }
+      },
+      {
+        "id": "style",
+        "name": {
+          "globalize": {
+            "en": "Style",
+            "fr": "Style"
+          }
+        },
+        "control": "object",
+        "options": {
+          "schema": [
+            {
+              "id": "font-size",
+              "name": {
+                "globalize": {
+                  "en": "Font Size",
+                  "fr": "Taille de police"
+                }
+              },
+              "control": "number"
+            },
+            {
+              "id": "fill",
+              "name": {
+                "globalize": {
+                  "en": "Font Color",
+                  "fr": "Couleur de police"
+                }
+              },
+              "control": "color"
+            },
+            {
+              "id": "opacity",
+              "name": {
+                "globalize": {
+                  "en": "Opacity",
+                  "fr": "Opacité"
+                }
+              },
+              "control": "number"
+            }
+          ]
+        },
+        "description": {
+          "globalize": {
+            "en": "Style of the text.",
+            "fr": "Style du texte."
+          }
+        }
+      }
+    ]
+  }
+]
