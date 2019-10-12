@@ -1,0 +1,295 @@
+[
+  {
+    "id": "innerRadius",
+    "name": {
+      "globalize": {
+        "en": "Inner Radius",
+        "fr": "Rayon intérieur"
+      }
+    },
+    "datatype": "integer"
+  },
+  {
+    "id": "outerRadius",
+    "name": {
+      "globalize": {
+        "en": "Outer Radius",
+        "fr": "Rayon extérieur"
+      }
+    },
+    "datatype": "integer"
+  },
+  {
+    "id": "cornerRadius",
+    "name": {
+      "globalize": {
+        "en": "Corner Radius",
+        "fr": "Rayon TODO"
+      }
+    },
+    "datatype": "integer"
+  },
+  {
+    "id": "gap",
+    "name": {
+      "globalize": {
+        "en": "Gap (Radians)",
+        "fr": "TODO"
+      }
+    },
+    "datatype": "number"
+  },
+  {
+    "id": "opacity",
+    "name": {
+      "globalize": {
+        "en": "Opacity"
+      }
+    },
+    "datatype": "number"
+  },
+  {
+    "id": "labels",
+    "name": {
+      "globalize": {
+        "en": "Labels"
+      }
+    },
+    "datatype": "object",
+    "options": {
+      "schema": [
+        {
+          "id": "position",
+          "name": {
+            "globalize": {
+              "en": "Position"
+            }
+          },
+          "datatype": "category",
+          "options": {
+            "categories": [
+              {
+                "id": "center",
+                "name": {
+                  "globalize": {
+                    "en": "Center"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "display",
+          "name": {
+            "globalize": {
+              "en": "Display"
+            }
+          },
+          "datatype": "boolean"
+        },
+        {
+          "id": "size",
+          "name": {
+            "globalize": {
+              "en": "Size"
+            }
+          },
+          "datatype": "integer"
+        },
+        {
+          "id": "color",
+          "name": {
+            "globalize": {
+              "en": "Color"
+            }
+          },
+          "datatype": "color"
+        },
+        {
+          "id": "radialOffset",
+          "name": {
+            "globalize": {
+              "en": "Radial Offset"
+            }
+          },
+          "datatype": "integer"
+        }
+      ]
+    },
+    "description": {
+      "globalize": {
+        "en": "Label settings for the layout."
+      }
+    }
+  },
+  {
+    "id": "ticks",
+    "name": {
+      "globalize": {
+        "en": "Ticks"
+      }
+    },
+    "datatype": "object",
+    "options": {
+      "schema": [
+        {
+          "id": "display",
+          "name": {
+            "globalize": {
+              "en": "Display"
+            }
+          },
+          "datatype": "boolean"
+        },
+        {
+          "id": "color",
+          "name": {
+            "globalize": {
+              "en": "Color"
+            }
+          },
+          "datatype": "color"
+        },
+        {
+          "id": "spacing",
+          "name": {
+            "globalize": {
+              "en": "Spacing"
+            }
+          },
+          "datatype": "integer"
+        },
+        {
+          "id": "labels",
+          "name": {
+            "globalize": {
+              "en": "Labels"
+            }
+          },
+          "datatype": "boolean"
+        },
+        {
+          "id": "labelSpacing",
+          "name": {
+            "globalize": {
+              "en": "Label Spacing"
+            }
+          },
+          "datatype": "integer"
+        },
+        {
+          "id": "labelSuffix",
+          "name": {
+            "globalize": {
+              "en": "Label Suffix"
+            }
+          },
+          "datatype": "expression"
+        },
+        {
+          "id": "labelDenominator",
+          "name": {
+            "globalize": {
+              "en": "Label Denominator"
+            }
+          },
+          "datatype": "integer"
+        },
+        {
+          "id": "labelDisplay0",
+          "name": {
+            "globalize": {
+              "en": "Display Zero"
+            }
+          },
+          "datatype": "boolean"
+        },
+        {
+          "id": "labelSize",
+          "name": {
+            "globalize": {
+              "en": "Size"
+            }
+          },
+          "datatype": "integer"
+        },
+        {
+          "id": "labelColor",
+          "name": {
+            "globalize": {
+              "en": "Color"
+            }
+          },
+          "datatype": "color"
+        },
+        {
+          "id": "labelFont",
+          "name": {
+            "globalize": {
+              "en": "Font"
+            }
+          },
+          "datatype": "category",
+          "options": {
+            "categories": [
+              {
+                "id": "default",
+                "name": {
+                  "globalize": {
+                    "en": "Default Font"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "majorSpacing",
+          "name": {
+            "globalize": {
+              "en": "Major Spacing"
+            }
+          },
+          "datatype": "integer"
+        },
+        {
+          "id": "size",
+          "name": {
+            "globalize": {
+              "en": "Size"
+            }
+          },
+          "datatype": "object",
+          "options": {
+            "schema": [
+              {
+                "id": "minor",
+                "name": {
+                  "globalize": {
+                    "en": "Minor"
+                  }
+                },
+                "datatype": "integer"
+              },
+              {
+                "id": "major",
+                "name": {
+                  "globalize": {
+                    "en": "Major"
+                  }
+                },
+                "datatype": "integer"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "description": {
+      "globalize": {
+        "en": "Tick settings for the layout."
+      }
+    }
+  }
+]

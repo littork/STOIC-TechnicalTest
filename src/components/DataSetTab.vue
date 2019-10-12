@@ -1,8 +1,14 @@
 <template>
-  <v-card class="mr-auto" width="300px" outlined>
-    <DataSetPicker class="py-6" />
+  <div>
+    <v-list-item>
+      <v-list-item-content>
+        <v-list-item-title class="headline">Data Sets</v-list-item-title>
+      </v-list-item-content>
+    </v-list-item>
+    <v-divider></v-divider>
     <DataSetLister />
-  </v-card>
+    <DataSetPicker />
+  </div>
 </template>
 
 <script>
@@ -10,7 +16,7 @@ import DataSetPicker from "@/components/DataSetPicker";
 import DataSetLister from "@/components/DataSetLister";
 
 export default {
-  name: "DataSetManager",
+  name: "DataSetTab",
   components: {
     DataSetPicker,
     DataSetLister

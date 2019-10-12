@@ -1,19 +1,35 @@
 <template>
   <div class="home">
-    <!-- <CircosDisplay /> -->
-    <DataSetManager />
+    <VisualSettings class="visual-settings" />
+    <CircosDisplay />
   </div>
 </template>
 
 <script>
-//import CircosDisplay from "@/components/CircosDisplay";
-import DataSetManager from "@/components/DataSetManager";
+import CircosDisplay from "@/components/CircosDisplay";
+import VisualSettings from "@/components/VisualSettings";
 
 export default {
   name: "Home",
   components: {
-    //CircosDisplay,
-    DataSetManager
+    CircosDisplay,
+    VisualSettings
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.home {
+  display: flex;
+  flex-direction: row;
+}
+
+.visual-settings {
+  width: min-content;
+  min-width: 600px;
+
+  height: 100vh;
+
+  border-radius: 0 4px 4px 0;
+}
+</style>

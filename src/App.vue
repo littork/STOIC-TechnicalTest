@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="v-application">
     <!-- <div id="nav"></div> -->
     <router-view />
   </div>
@@ -17,5 +17,7 @@ export default {
 :root {
   color: var(--text-color);
   background: var(--background-color);
+
+  overflow: hidden;
 }
 </style>

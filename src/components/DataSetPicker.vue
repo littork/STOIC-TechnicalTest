@@ -2,7 +2,7 @@
   <div>
     <v-dialog v-model="dialog" persistent max-width="600px">
       <template v-slot:activator="{ on }">
-        <v-btn block v-on="on">Upload Data Set</v-btn>
+        <v-btn tile depressed block v-on="on">Upload Data Set</v-btn>
       </template>
       <v-card>
         <v-card-title>
@@ -54,20 +54,36 @@ export default {
     dialog: false
   }),
   methods: {
-    readFiles() {
-      this.files.forEach((file, index) => {
-        let fileReader = new FileReader();
-        fileReader.addEventListener("load", loadedFile => {
-          let formattedResult = loadedFile.target.result;
+    async readFiles() {
+      let filePromises = [];
 
-          this.$store.dispatch("addDataset", {
-            dataSet: formattedResult,
-            name: file.name,
-            fileType: file.name.substring(file.name.lastIndexOf(".") + 1)
-          });
-        });
-        fileReader.readAsDataURL(file);
+      this.files.forEach((file, index) => {
+        filePromises.push(
+          new Promise((resolve, reject) => {
+            let fileReader = new FileReader();
+            fileReader.addEventListener("load", async loadedFile => {
+              let formattedResult = loadedFile.target.result;
+
+              try {
+                await this.$store.dispatch("addDataset", {
+                  dataSet: formattedResult,
+                  name: file.name,
+                  fileType: file.name.substring(file.name.lastIndexOf(".") + 1)
+                });
+              } catch (e) {
+                reject();
+              }
+              resolve();
+            });
+            fileReader.readAsDataURL(file);
+          })
+        );
       });
+
+      await Promise.all(filePromises);
+
+      this.$store.commit("dataset.deduplicate");
+
       this.files = [];
     },
     referenceFiles() {
