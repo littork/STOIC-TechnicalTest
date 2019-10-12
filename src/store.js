@@ -46,7 +46,7 @@ export default new Vuex.Store({
           break;
       }
 
-      commit("classifyDataset");
+      // commit("classifyDataset");
     }
   }
 });
