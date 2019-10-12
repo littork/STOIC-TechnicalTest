@@ -3,3 +3,17 @@
   width: 0;
   height: 0;
 }
+
+:root {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+}
+
+.flex-grow-1 {
+  flex-grow: 1 !important;
+}
+
+// $color-pack: to-upper-case($string: "");
+// @import "~vuetify/src/styles/main.sass";

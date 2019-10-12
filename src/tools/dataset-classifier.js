@@ -36,9 +36,9 @@ export default function(track) {
   console.log(trackStructure);
   trackMetadata.default.forEach(trackType => {
     trackType.params.forEach(trackDataEntry => {
-      console.log(`Comparing ${trackDataEntry.id}`);
+      //console.log(`Comparing ${trackDataEntry.id}`);
       if (trackStructure.includes(trackDataEntry.id)) {
-        console.log(`${trackDataEntry.id} - ${trackType}`);
+        //console.log(`${trackDataEntry.id} - ${trackType}`);
       }
     });
 

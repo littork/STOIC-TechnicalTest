@@ -9,25 +9,25 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    dataSet: {
-      data: [],
-      track: 0
-    }
+    dataSets: []
   },
   mutations: {
-    writeDataset(state, dataSet) {
-      state.dataSet = { data: dataSet };
+    pushDataset(state, dataSet) {
+      state.dataSets.push({ data: dataSet });
     },
     classifyDataset(state) {
-      state.dataSet.track = datasetClassifier(state.dataSet);
+      // state.dataSets.track = datasetClassifier(state.dataSet);
     }
   },
   actions: {
-    async processDataset({ commit }, payload) {
+    async addDataset({ commit }, payload) {
       switch (payload.fileType.toLowerCase()) {
         case "json":
           try {
-            commit("writeDataset", await d3.json(payload.dataSet));
+            commit(
+              "pushDataset",
+              await d3.json({ data: payload.dataSet, name: payload.name })
+            );
           } catch (e) {
             console.error(e);
             alert(e);
@@ -37,7 +37,10 @@ export default new Vuex.Store({
         case "txt":
         case "csv":
           try {
-            commit("writeDataset", await d3.csv(payload.dataSet));
+            commit(
+              "pushDataset",
+              await d3.csv({ data: payload.dataSet, name: payload.name })
+            );
           } catch (e) {
             console.error(e);
             alert(e);
@@ -46,7 +49,7 @@ export default new Vuex.Store({
           break;
       }
 
-      // commit("classifyDataset");
+      commit("classifyDataset");
     }
   }
 });

@@ -1,19 +1,19 @@
 <template>
   <div class="home">
     <!-- <CircosDisplay /> -->
-    <DataSetPicker />
+    <DataSetManager />
   </div>
 </template>
 
 <script>
-import CircosDisplay from "@/components/CircosDisplay";
-import DataSetPicker from "@/components/DataSetPicker";
+//import CircosDisplay from "@/components/CircosDisplay";
+import DataSetManager from "@/components/DataSetManager";
 
 export default {
   name: "Home",
   components: {
-    CircosDisplay,
-    DataSetPicker
+    //CircosDisplay,
+    DataSetManager
   }
 };
 </script>

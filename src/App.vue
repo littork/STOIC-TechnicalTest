@@ -1,18 +1,19 @@
 <template>
-  <div id="app">
+  <div>
     <!-- <div id="nav"></div> -->
     <router-view />
   </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-}
+<script>
+export default {
+  mounted() {
+    document.body.setAttribute("data-app", true);
+  }
+};
+</script>
 
+<style lang="scss">
 :root {
   color: var(--text-color);
   background: var(--background-color);
