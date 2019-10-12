@@ -3,22 +3,27 @@ import Vuex from "vuex";
 
 import * as d3 from "d3";
 
-import * as trackMetadata from "@/circos.tracks.json";
+import datasetClassifier from "@/tools/dataset-classifier";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    dataSet: []
+    dataSet: {
+      data: [],
+      track: 0
+    }
   },
   mutations: {
     writeDataset(state, dataSet) {
-      state.dataSet = dataSet;
+      state.dataSet = { data: dataSet };
+    },
+    classifyDataset(state) {
+      state.dataSet.track = datasetClassifier(state.dataSet);
     }
   },
   actions: {
     async processDataset({ commit }, payload) {
-      console.log(trackMetadata);
       switch (payload.fileType.toLowerCase()) {
         case "json":
           try {
@@ -26,6 +31,7 @@ export default new Vuex.Store({
           } catch (e) {
             console.error(e);
             alert(e);
+            return;
           }
           break;
         case "txt":
@@ -35,9 +41,12 @@ export default new Vuex.Store({
           } catch (e) {
             console.error(e);
             alert(e);
+            return;
           }
           break;
       }
+
+      commit("classifyDataset");
     }
   }
 });
