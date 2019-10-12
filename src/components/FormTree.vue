@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-for="node in nodes" v-bind:key="node.id">
+    <div v-for="(node,index) in nodes" v-bind:key="node.id">
       <div v-if="isType(node, 'boolean')">
         <v-checkbox
           v-model="value[node.id]"
@@ -26,12 +26,12 @@
           filled
         ></v-text-field>
       </div>
-      <div v-else-if="isType(node, 'color')">
-        <div class="form-flex-container mb-7">
+      <div v-else-if="isType(node, 'color') || isType(node, 'palette')">
+        <div class="form-flex-container color-container">
           <div class="form-element-label">{{ node.name.globalize.en }}</div>
           <v-spacer />
           <v-color-picker
-            class="mx-auto color-picker"
+            class="mx-auto color-pickercolor-picker"
             v-model="value[node.id]"
             @input="emitChange($event, node)"
             hide-inputs
@@ -47,11 +47,18 @@
           filled
         ></v-text-field>
       </div>
-      <div v-else-if="isType(node, 'category')">
+      <div v-else-if="isType(node, 'category') && findNodeLength(node) <= 32">
+        why is passthrough failing?
         <div class="form-flex-container mb-6">
           <div class="form-element-label">{{ node.name.globalize.en }}</div>
           <v-spacer />
-          <v-btn-toggle borderless v-model="value[node.id]" @change="emitChange($event, node)">
+          <v-btn-toggle
+            borderless
+            dense
+            mandatory
+            v-model="value[node.id]"
+            @change="emitChange($event, node)"
+          >
             <v-btn
               v-for="category in node.options.categories"
               v-bind:key="category.id"
@@ -63,15 +70,29 @@
           </v-btn-toggle>
         </div>
       </div>
-      <div v-else-if="isType(node, 'object')">
+      <div
+        v-else-if="isType(node, 'dropdown') || (isType(node, 'category') && findNodeLength(node) > 32)"
+      >
+        <v-select
+          @change="emitChange($event, node)"
+          :items="simplifyCategories(node.options.categories)"
+          :value="value[node.id]"
+          outlined
+          :label="node.name.globalize.en"
+        />
+      </div>
+      <div v-else-if="isType(node, 'object') || isType(node, 'collection')">
         <div class="form-section-label">{{ node.name.globalize.en }}</div>
         <FormTree
           class="internal-form"
-          v-model="value[node.id]"
+          :value="value[node.id] || {}"
           @input="emitChange($event, node)"
           :nodes="node.options.schema"
         />
       </div>
+      <h1
+        v-else
+      >No corresponding form element found for node at index {{index}}. Type: {{extractType(node)}}</h1>
     </div>
   </div>
 </template>
@@ -87,6 +108,13 @@ export default {
     value: Object
   },
   methods: {
+    findNodeLength(node) {
+      // Just use a select if there are a bunch of options
+      return node.options.categories.reduce(
+        (acc, category) => acc + category.name.globalize.en.length,
+        0
+      );
+    },
     emitChange(event, node) {
       // TODO: How can this be made more efficient?
       let newValue = JSON.parse(JSON.stringify(this.value));
@@ -100,6 +128,9 @@ export default {
     },
     isType(node, type) {
       return this.extractType(node) === type;
+    },
+    simplifyCategories(categories) {
+      return categories.map(category => category.name.globalize.en);
     }
   }
 };
@@ -114,6 +145,8 @@ export default {
   text-align: left;
   font-size: 18px;
   font-weight: bold;
+
+  padding-bottom: 24px;
 }
 
 .form-flex-container {
@@ -121,6 +154,10 @@ export default {
 
   align-items: center;
   justify-content: space-between;
+}
+
+.color-container {
+  margin-bottom: 32px;
 }
 
 .color-picker {

@@ -104,7 +104,7 @@
               "en": "Color"
             }
           },
-          "datatype": "color"
+          "datatype": "expression"
         },
         {
           "id": "radialOffset",

@@ -12,9 +12,20 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     dataSets: [],
-    layoutConfiguration: LayoutDefaults
+    layoutConfiguration: LayoutDefaults,
+    tracks: [
+      {
+        name: "Test track"
+      }
+    ]
   },
   mutations: {
+    ["tracks.remove"](state, index) {
+      state.tracks.splice(index, 1);
+    },
+    ["tracks.set"](state, tracks) {
+      state.tracks = tracks;
+    },
     ["layoutConfiguration.set"](state, config) {
       state.layoutConfiguration = config;
     },
