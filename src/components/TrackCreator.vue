@@ -45,6 +45,7 @@ export default {
         return { trackType: "Chords" };
       },
       set(v) {
+        this.track = {};
         // TODO This NEEDS to be redone before globalization is added
         this.selectedTrackType = this.tracksMetadata.findIndex(
           track => track.name.globalize.en === v.trackType
@@ -77,6 +78,7 @@ export default {
   methods: {
     createTrack() {
       console.log("Would be creating track");
+      console.log(this.track);
     }
   }
 };

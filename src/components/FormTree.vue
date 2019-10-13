@@ -3,17 +3,17 @@
     <div v-for="(node,index) in nodes" v-bind:key="node.id">
       <div v-if="isType(node, 'boolean')">
         <v-checkbox
-          v-model="value[node.id]"
+          :input-value="value[node.id]"
           @change="emitChange($event, node)"
           :label="node.name.globalize.en"
-          color="red"
+          color="blue"
           inset
         ></v-checkbox>
       </div>
       <div v-else-if="isType(node, 'integer')">
         <v-text-field
           :label="node.name.globalize.en"
-          v-model="value[node.id]"
+          :value="value[node.id]"
           @change="emitChange($event, node)"
           filled
         ></v-text-field>
@@ -21,7 +21,7 @@
       <div v-else-if="isType(node, 'number')">
         <v-text-field
           :label="node.name.globalize.en"
-          v-model="value[node.id]"
+          :value="value[node.id]"
           @change="emitChange($event, node)"
           filled
         ></v-text-field>
@@ -31,8 +31,8 @@
           <div class="form-element-label">{{ node.name.globalize.en }}</div>
           <v-spacer />
           <v-color-picker
-            class="mx-auto color-pickercolor-picker"
-            v-model="value[node.id]"
+            class="mx-auto color-picker"
+            :value="value[node.id]"
             @input="emitChange($event, node)"
             hide-inputs
             hide-mode-switch
@@ -42,21 +42,21 @@
       <div v-else-if="isType(node, 'expression')">
         <v-text-field
           :label="node.name.globalize.en"
-          v-model="value[node.id]"
+          :value="value[node.id]"
+          :placeholder="node.name.globalize.en"
           @change="emitChange($event, node)"
           filled
         ></v-text-field>
       </div>
-      <div v-else-if="isType(node, 'category') && findNodeLength(node) <= 32">
-        why is passthrough failing?
-        <div class="form-flex-container mb-6">
+      <div v-else-if="isType(node, 'category') && categoryNodeLengthSmall(node)">
+        <div class="form-flex-container category-container">
           <div class="form-element-label">{{ node.name.globalize.en }}</div>
           <v-spacer />
           <v-btn-toggle
             borderless
             dense
             mandatory
-            v-model="value[node.id]"
+            :value="value[node.id]"
             @change="emitChange($event, node)"
           >
             <v-btn
@@ -71,7 +71,7 @@
         </div>
       </div>
       <div
-        v-else-if="isType(node, 'dropdown') || (isType(node, 'category') && findNodeLength(node) > 32)"
+        v-else-if="isType(node, 'dropdown') || (isType(node, 'category') && !categoryNodeLengthSmall(node))"
       >
         <v-select
           @change="emitChange($event, node)"
@@ -107,7 +107,71 @@ export default {
     },
     value: Object
   },
+  watch: {
+    nodes() {
+      this.syncSchema();
+    }
+  },
+  created() {
+    this.syncSchema();
+  },
   methods: {
+    enforceNodeSkeleton(nodes, value) {
+      // Fill starting data to match that of the node schema
+      nodes.forEach(node => {
+        switch (this.extractType(node)) {
+          case "boolean":
+            value[node.id] = false;
+            break;
+          case "integer":
+            value[node.id] = "0";
+            break;
+          case "number":
+            value[node.id] = "0.0";
+            break;
+          case "color":
+          case "palette":
+            value[node.id] = "#ffffff";
+            break;
+          case "expression":
+            value[node.id] = "";
+            break;
+          case "category":
+            if (this.categoryNodeLengthSmall(node)) {
+              value[node.id] = node.options.categories[0].id;
+              break;
+            }
+          case "dropdown":
+            value[node.id] = node.options.categories[0].name.globalize.en;
+            break;
+          case "object":
+          case "collection":
+            // Propogate preemptively to ensure this works
+            value[node.id] = {};
+            this.enforceNodeSkeleton(node.options.schema, value[node.id]);
+            break;
+          default:
+            throw `Invalid schema data type '${node.datatype}' for node: ${node.id}`;
+            break;
+        }
+      });
+    },
+    categoryNodeLengthSmall(node) {
+      return this.findNodeLength(node) <= 32;
+    },
+    syncSchema() {
+      // Ensure that current value is at least a skeleton of what the schema demands
+      let schemaPresent = false;
+      for (let key in this.value) {
+        if (this.value.hasOwnProperty(key)) {
+          schemaPresent = true;
+          break;
+        }
+      }
+      if (this.nodes.length && !schemaPresent) {
+        this.enforceNodeSkeleton(this.nodes, this.value);
+      }
+    },
     findNodeLength(node) {
       // Just use a select if there are a bunch of options
       return node.options.categories.reduce(
@@ -154,6 +218,10 @@ export default {
 
   align-items: center;
   justify-content: space-between;
+}
+
+.category-container {
+  margin-bottom: 30px;
 }
 
 .color-container {
