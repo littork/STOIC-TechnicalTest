@@ -8,13 +8,16 @@
     <v-divider></v-divider>
     <v-tabs vertical background-color="blue darken-1" slider-color="blue darken-4" dark>
       <v-tab>
-        <v-icon left>mdi-grid</v-icon>Datasets
+        <v-icon left>mdi-grid</v-icon>
+        <v-spacer />Datasets
       </v-tab>
       <v-tab>
-        <v-icon left>mdi-wrench</v-icon>Layout
+        <v-icon left>mdi-wrench</v-icon>
+        <v-spacer />Layout
       </v-tab>
       <v-tab>
-        <v-icon left>mdi-layers-triple</v-icon>Tracks
+        <v-icon left>mdi-layers-triple</v-icon>
+        <v-spacer />Tracks
       </v-tab>
 
       <v-tab-item class="tab-item-wrapper">

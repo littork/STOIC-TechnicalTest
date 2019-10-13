@@ -13,11 +13,8 @@ export default new Vuex.Store({
   state: {
     dataSets: [],
     layoutConfiguration: LayoutDefaults,
-    tracks: [
-      {
-        name: "Test track"
-      }
-    ]
+    tracks: [],
+    trackNameCounter: 0
   },
   mutations: {
     ["tracks.remove"](state, index) {
@@ -25,6 +22,20 @@ export default new Vuex.Store({
     },
     ["tracks.set"](state, tracks) {
       state.tracks = tracks;
+    },
+    ["tracks.add"](state, payload) {
+      let newTrack = JSON.parse(JSON.stringify(payload.track));
+
+      if (payload.autoname) {
+        newTrack.name = `Track ${++state.trackNameCounter}`;
+      }
+
+      state.tracks.push(newTrack);
+    },
+    ["tracks.edit"](state, payload) {
+      let editedTrack = JSON.parse(JSON.stringify(payload.track));
+
+      state.tracks[payload.index] = editedTrack;
     },
     ["layoutConfiguration.set"](state, config) {
       state.layoutConfiguration = config;

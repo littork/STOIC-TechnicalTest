@@ -1,23 +1,28 @@
 <template>
   <div>
     <v-dialog v-model="dialog" persistent max-width="600px">
-      <template v-slot:activator="{ on }">
-        <v-btn tile depressed block v-on="on">Add Track</v-btn>
+      <template v-slot:activator="{}">
+        <v-btn tile depressed block @click="showDialog">Add Track</v-btn>
       </template>
       <v-card>
         <v-card-title>
-          <span class="headline">Add New Track</span>
+          <span class="headline">{{ editing ? "Edit" : "Add New" }} Track</span>
         </v-card-title>
         <v-card-text>
           <v-container>
             <FormTree :nodes="trackTypeForm" v-model="trackType" />
-            <FormTree :nodes="tracksMetadata[selectedTrackType].params" v-model="track" />
+            <FormTree
+              :nodes="tracksMetadata[selectedTrackType].params"
+              v-model="track"
+              ref="track_formtree"
+            />
           </v-container>
         </v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
-          <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
-          <v-btn color="blue darken-1" text @click="createTrack">Create</v-btn>
+          <v-btn color="blue darken-1" text @click="close">Close</v-btn>
+          <v-btn color="blue darken-1" text @click="editTrack" v-if="editing">Edit</v-btn>
+          <v-btn color="blue darken-1" text @click="createTrack" v-else>Create</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -34,7 +39,10 @@ export default {
   data: () => ({
     dialog: false,
     track: {},
-    selectedTrackType: 0
+    selectedTrackType: 0,
+
+    editing: false,
+    editIndex: 0
   }),
   components: {
     FormTree
@@ -42,7 +50,11 @@ export default {
   computed: {
     trackType: {
       get() {
-        return { trackType: "Chords" };
+        return {
+          trackType:
+            this.tracksMetadata[this.selectedTrackType].name.globalize.en ||
+            "Chords"
+        };
       },
       set(v) {
         this.track = {};
@@ -76,9 +88,40 @@ export default {
     }
   },
   methods: {
+    showDialog() {
+      this.dialog = true;
+      this.editing = false;
+
+      if (this.$refs && this.$refs.track_formtree) {
+        this.$refs.track_formtree.forceSyncSchema();
+      }
+    },
+    edit(payload) {
+      this.showDialog();
+      this.editing = true;
+
+      this.editIndex = payload.index;
+      this.track = payload.track;
+    },
+    close() {
+      this.dialog = false;
+    },
+    markTrackType() {
+      this.track.type = this.trackType.trackType;
+    },
+    editTrack() {
+      this.markTrackType();
+      this.$store.commit("tracks.edit", {
+        index: this.editIndex,
+        track: this.track
+      });
+      this.close();
+    },
     createTrack() {
-      console.log("Would be creating track");
-      console.log(this.track);
+      this.markTrackType();
+      this.$store.commit("tracks.add", { track: this.track, autoname: true });
+
+      this.close();
     }
   }
 };

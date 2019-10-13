@@ -159,6 +159,9 @@ export default {
     categoryNodeLengthSmall(node) {
       return this.findNodeLength(node) <= 32;
     },
+    forceSyncSchema() {
+      this.enforceNodeSkeleton(this.nodes, this.value);
+    },
     syncSchema() {
       // Ensure that current value is at least a skeleton of what the schema demands
       let schemaPresent = false;
