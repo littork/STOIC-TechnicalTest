@@ -124,9 +124,11 @@ const store = new Vuex.Store({
           switch (transformation.type) {
             case 0:
               // Map
-              console.log(
-                `Working data before operation: ${JSON.stringify(workingData)}`
-              );
+              /*console.log(
+                `Working data before map operation: ${JSON.stringify(
+                  workingData
+                )}`
+              );*/
               workingData = workingData.map(d => {
                 let resultantObject = {};
 
@@ -144,13 +146,88 @@ const store = new Vuex.Store({
 
                 return resultantObject;
               });
-              console.log(
+              /*console.log(
                 `Result of map operation: ${JSON.stringify(workingData)}`
-              );
+              );*/
               break;
             case 1:
               // Filter
+              /*console.log(
+                `Working data before filter operation: ${JSON.stringify(
+                  workingData
+                )}`
+              );*/
+              workingData = workingData.filter(d => {
+                let filterPositives = 0;
 
+                transformation.filterOperations.forEach(filterOperation => {
+                  if (filterPositives > 0) {
+                    return;
+                  }
+
+                  if (
+                    !filterOperation.key.length ||
+                    !filterOperation.operation.length ||
+                    !filterOperation.comparator.length
+                  ) {
+                    throw `Invalid filter operation: ${JSON.stringify(
+                      filterOperation
+                    )}`;
+                  }
+
+                  // "<", ">", "!=", "!==", "==", "==="
+
+                  switch (filterOperation.operation) {
+                    case "<":
+                      if (d[filterOperation.key] < filterOperation.comparator) {
+                        filterPositives++;
+                      }
+                      break;
+                    case ">":
+                      if (d[filterOperation.key] > filterOperation.comparator) {
+                        filterPositives++;
+                      }
+                      break;
+                    case "!=":
+                      if (
+                        d[filterOperation.key] != filterOperation.comparator
+                      ) {
+                        filterPositives++;
+                      }
+                      break;
+                    case "!==":
+                      if (
+                        d[filterOperation.key] !== filterOperation.comparator
+                      ) {
+                        filterPositives++;
+                      }
+                      break;
+                    case "==":
+                      if (
+                        d[filterOperation.key] == filterOperation.comparator
+                      ) {
+                        filterPositives++;
+                      }
+                      break;
+                    case "===":
+                      if (
+                        d[filterOperation.key] === filterOperation.comparator
+                      ) {
+                        filterPositives++;
+                      }
+                      break;
+                  }
+
+                  /*resultantObject[filterOperation.to] = mapOperation.toInt
+                    ? parseInt(d[filterOperation.from])
+                    : d[mapOperation.from];*/
+                });
+
+                return filterPositives > 0;
+              });
+              /*console.log(
+                `Result of filter operation: ${JSON.stringify(workingData)}`
+              );*/
               break;
           }
         });

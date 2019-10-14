@@ -81,7 +81,13 @@
                       @change="$set(conditionItem, 'key', $event)"
                     />
                     <!-- <div class="map-to-text px-4">{{'<>'}}</div> -->
-                    <v-select :items="conditions" outlined class="px-2"></v-select>
+                    <v-select
+                      :items="conditions"
+                      :value="conditionItem.operation"
+                      @change="$set(conditionItem, 'operation', $event)"
+                      outlined
+                      class="px-2"
+                    ></v-select>
                     <v-text-field
                       label="Value"
                       outlined
@@ -121,7 +127,7 @@ import Vue from "vue";
 export default {
   name: "DataSetTransformations",
   data: () => ({
-    transformationTypeNames: ["Map", "Filter"],
+    transformationTypeNames: ["Map", "Or Filter"],
     transformationTypes: [],
     conditions: ["<", ">", "!=", "!==", "==", "==="]
   }),
