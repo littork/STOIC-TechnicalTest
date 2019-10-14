@@ -6,13 +6,12 @@
       </template>
       <v-card>
         <v-card-title>
-          <span class="headline">Upload Data Set</span>
+          <span class="headline">Upload Data Sets</span>
         </v-card-title>
         <v-card-text>
           <v-container>
             <v-file-input
               v-model="files"
-              color="deep-purple accent-4"
               counter
               label="Dataset input"
               multiple
@@ -22,7 +21,7 @@
               :show-size="1000"
             >
               <template v-slot:selection="{ index, text }">
-                <v-chip color="deep-purple accent-4" dark label small>{{ text }}</v-chip>
+                <v-chip color="#1177cc" dark label small>{{ text }}</v-chip>
               </template>
             </v-file-input>
           </v-container>

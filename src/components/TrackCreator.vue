@@ -53,7 +53,8 @@ export default {
         return {
           trackType:
             this.tracksMetadata[this.selectedTrackType].name.globalize.en ||
-            "Chords"
+            "Chords",
+          id: this.tracksMetadata[this.selectedTrackType].id || "chords"
         };
       },
       set(v) {
@@ -108,6 +109,7 @@ export default {
     },
     markTrackType() {
       this.track.type = this.trackType.trackType;
+      this.track.id = this.trackType.id;
     },
     editTrack() {
       this.markTrackType();

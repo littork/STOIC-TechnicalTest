@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <VisualSettings class="visual-settings" />
-    <CircosDisplay />
+    <CircosDisplay class="circos-display" />
   </div>
 </template>
 
@@ -22,6 +22,8 @@ export default {
 .home {
   display: flex;
   flex-direction: row;
+
+  width: 100vw;
 }
 
 .visual-settings {
@@ -31,5 +33,10 @@ export default {
   height: 100vh;
 
   border-radius: 0 4px 4px 0;
+}
+
+.circos-display {
+  width: 100%;
+  height: 100%;
 }
 </style>

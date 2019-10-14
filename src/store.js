@@ -13,10 +13,17 @@ export default new Vuex.Store({
   state: {
     dataSets: [],
     layoutConfiguration: LayoutDefaults,
+    layoutData: [],
     tracks: [],
     trackNameCounter: 0
   },
   mutations: {
+    ["layout.data.set"](state, data) {
+      state.layoutData = data.data;
+    },
+    ["tracks.setdata"](state, payload) {
+      Vue.set(state.tracks[payload.index], "data", payload.data);
+    },
     ["tracks.remove"](state, index) {
       state.tracks.splice(index, 1);
     },
