@@ -9,15 +9,20 @@ import LayoutDefaults from "circos/layout-conf.js";
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
   state: {
     dataSets: [],
     layoutConfiguration: LayoutDefaults,
     layoutData: [],
     tracks: [],
-    trackNameCounter: 0
+    trackNameCounter: 0,
+    dataSetsUnderComputation: [],
+    uniqueIdCounter: 0
   },
   mutations: {
+    ["dataset.set_transformations"](state, payload) {
+      state.dataSets[payload.index].transformations = payload.change;
+    },
     ["layout.data.set"](state, data) {
       state.layoutData = data.data;
     },
@@ -46,6 +51,18 @@ export default new Vuex.Store({
     },
     ["layoutConfiguration.set"](state, config) {
       state.layoutConfiguration = config;
+    },
+    ["dataset.mark_recompute"](state, uniqueId) {
+      let recomputeIndex = state.dataSets.findIndex(
+        d => d.uniqueId === uniqueId
+      );
+
+      if (recomputeIndex < 0) {
+        // Dataset may have been removed
+        return;
+      }
+
+      Vue.set(state.dataSets[recomputeIndex], "computed", false);
     },
     ["dataset.push"](state, dataSet) {
       state.dataSets.push(dataSet);
@@ -87,21 +104,105 @@ export default new Vuex.Store({
     },
     ["dataset.classify"](state) {
       // state.dataSets.track = datasetClassifier(state.dataSet);
+    },
+    ["dataset.compute"](state, datasetIndex) {
+      const targetUniqueId = state.dataSets[datasetIndex].uniqueId;
+      if (state.dataSetsUnderComputation.includes(targetUniqueId)) {
+        return;
+      }
+      Vue.set(
+        state.dataSetsUnderComputation,
+        state.dataSetsUnderComputation.length,
+        targetUniqueId
+      );
+
+      {
+        // Run computations for data set
+        let workingData = state.dataSets[datasetIndex].parsedData;
+
+        state.dataSets[datasetIndex].transformations.forEach(transformation => {
+          switch (transformation.type) {
+            case 0:
+              // Map
+              console.log(
+                `Working data before operation: ${JSON.stringify(workingData)}`
+              );
+              workingData = workingData.map(d => {
+                let resultantObject = {};
+
+                transformation.mapOperations.forEach(mapOperation => {
+                  if (!mapOperation.from.length || !mapOperation.to.length) {
+                    throw `Invalid map operation: ${JSON.stringify(
+                      mapOperation
+                    )}`;
+                  }
+
+                  resultantObject[mapOperation.to] = mapOperation.toInt
+                    ? parseInt(d[mapOperation.from])
+                    : d[mapOperation.from];
+                });
+
+                return resultantObject;
+              });
+              console.log(
+                `Result of map operation: ${JSON.stringify(workingData)}`
+              );
+              break;
+            case 1:
+              // Filter
+
+              break;
+          }
+        });
+        /*console.log(
+          `Would be running computations on this thing: ${JSON.stringify(
+            state.dataSets[datasetIndex]
+          )}`
+        );*/
+      }
+
+      Vue.set(state.dataSets[datasetIndex], "computed", true);
+
+      state.dataSetsUnderComputation.splice(
+        state.dataSetsUnderComputation.indexOf(targetUniqueId),
+        1
+      );
+    },
+    ["uniqueids.increase"](state) {
+      state.uniqueIdCounter++;
     }
   },
   actions: {
+    async syncAllDatasets({ state, commit }) {
+      state.dataSets.forEach((v, i) => {
+        if (!v.computed) {
+          commit("dataset.compute", i);
+        }
+      });
+    },
+    async syncDataset({ commit }, datasetIndex) {
+      commit("dataset.compute", datasetIndex);
+    },
     async addDataset({ commit, state }, payload) {
-      commit("dataset.push", { loading: true });
+      commit("uniqueids.increase");
+      let pickedUniqueId = state.uniqueIdCounter;
+
+      commit("dataset.push", { loading: true, computed: true });
       let dataSetIndex = state.dataSets.length - 1;
       try {
+        let parsedData;
         switch (payload.fileType.toLowerCase()) {
           case "json":
+            parsedData = await d3.json(payload.dataSet);
             commit("dataset.update", {
               dataSet: {
-                data: await d3.json(payload.dataSet),
+                parsedData,
                 rawData: payload.dataSet,
+                data: parsedData,
                 name: payload.name,
-                loading: false
+                loading: false,
+                computed: true,
+                uniqueId: pickedUniqueId
               },
               index: dataSetIndex
             });
@@ -109,12 +210,16 @@ export default new Vuex.Store({
             break;
           case "txt":
           case "csv":
+            parsedData = await d3.csv(payload.dataSet);
             commit("dataset.update", {
               dataSet: {
-                data: await d3.csv(payload.dataSet),
+                parsedData,
                 rawData: payload.dataSet,
+                data: parsedData,
                 name: payload.name,
-                loading: false
+                loading: false,
+                computed: true,
+                uniqueId: pickedUniqueId
               },
               index: dataSetIndex
             });
@@ -131,3 +236,5 @@ export default new Vuex.Store({
     }
   }
 });
+
+export default store;

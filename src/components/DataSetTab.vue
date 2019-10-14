@@ -8,18 +8,21 @@
     <v-divider></v-divider>
     <DataSetLister />
     <DataSetPicker />
+    <DataSetSyncer />
   </div>
 </template>
 
 <script>
 import DataSetPicker from "@/components/DataSetPicker";
 import DataSetLister from "@/components/DataSetLister";
+import DataSetSyncer from "@/components/DataSetSyncer";
 
 export default {
   name: "DataSetTab",
   components: {
     DataSetPicker,
-    DataSetLister
+    DataSetLister,
+    DataSetSyncer
   }
 };
 </script>
