@@ -1,11 +1,12 @@
 <template>
   <div>
-    <div v-for="(node,index) in nodes" v-bind:key="node.id">
+    <div v-for="(node,index) in nodes" v-bind:key="node.id" style="padding-bottom: 16px;">
       <div v-if="isType(node, 'boolean')">
         <v-checkbox
           :input-value="value[node.id]"
           @change="emitChange($event, node)"
           :label="node.name.globalize[$l.lang()]"
+          hide-details
           color="blue"
           inset
         ></v-checkbox>
@@ -15,6 +16,7 @@
           :label="node.name.globalize[$l.lang()]"
           :value="value[node.id]"
           @change="emitChange($event, node)"
+          hide-details
           filled
         ></v-text-field>
       </div>
@@ -23,18 +25,19 @@
           :label="node.name.globalize[$l.lang()]"
           :value="value[node.id]"
           @change="emitChange($event, node)"
+          hide-details
           filled
         ></v-text-field>
       </div>
       <div v-else-if="isType(node, 'color') || isType(node, 'palette')">
-        <div class="form-flex-container color-container">
+        <div class="form-flex-container">
           <div class="form-element-label">{{ node.name.globalize[$l.lang()] }}</div>
           <v-spacer />
           <v-color-picker
             class="mx-auto color-picker"
             :value="value[node.id]"
             @input="emitChange($event, node)"
-            hide-inputs
+            :hide-inputs="!isType(node, 'palette')"
             hide-mode-switch
           ></v-color-picker>
         </div>
@@ -45,11 +48,12 @@
           :value="value[node.id]"
           :placeholder="node.name.globalize[$l.lang()]"
           @change="emitChange($event, node)"
+          hide-details
           filled
         ></v-text-field>
       </div>
       <div v-else-if="isType(node, 'category') && categoryNodeLengthSmall(node)">
-        <div class="form-flex-container category-container">
+        <div class="form-flex-container">
           <div class="form-element-label">{{ node.name.globalize[$l.lang()] }}</div>
           <v-spacer />
           <v-btn-toggle
@@ -77,6 +81,7 @@
           @change="emitChange($event, node)"
           :items="simplifyCategories(node.options.categories)"
           :value="value[node.id]"
+          hide-details
           outlined
           :label="node.name.globalize[$l.lang()]"
         />
@@ -93,6 +98,10 @@
       <h1
         v-else
       >No corresponding form element found for node at index {{index}}. Type: {{extractType(node)}}</h1>
+      <h5
+        v-if="node.description"
+        style="padding-top: 4px;"
+      >{{ node.description.globalize[$l.lang()] }}</h5>
     </div>
   </div>
 </template>
@@ -221,14 +230,6 @@ export default {
 
   align-items: center;
   justify-content: space-between;
-}
-
-.category-container {
-  margin-bottom: 30px;
-}
-
-.color-container {
-  margin-bottom: 32px;
 }
 
 .color-picker {

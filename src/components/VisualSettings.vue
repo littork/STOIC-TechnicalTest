@@ -6,7 +6,13 @@
       <v-spacer />
     </v-toolbar>
     <v-divider></v-divider>
-    <v-tabs vertical background-color="blue darken-1" slider-color="blue darken-4" dark>
+    <v-tabs
+      vertical
+      background-color="blue darken-1"
+      slider-color="blue darken-4"
+      dark
+      ref="visual_tabs"
+    >
       <v-tab>
         <v-icon left>mdi-grid</v-icon>
         <v-spacer />
@@ -27,6 +33,10 @@
         <v-spacer />
         {{ $l.go("TAB_EXPORT") }}
       </v-tab>
+      <v-btn @click.stop="openGitHub()" class="flex-horizontal mt-6 mx-2">
+        <v-icon left>mdi-github-circle</v-icon>
+        <v-spacer />GitHub
+      </v-btn>
       <LanguageSelector class="px-4 custom-language-selector" />
 
       <v-tab-item class="tab-item-wrapper">
@@ -60,6 +70,11 @@ export default {
     TrackConfigurationTab,
     ExportTab,
     LanguageSelector
+  },
+  methods: {
+    openGitHub() {
+      window.open("https://github.com/littork/STOIC-TechnicalTest", "_blank");
+    }
   }
 };
 </script>

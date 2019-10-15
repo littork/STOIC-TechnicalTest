@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <VisualSettings class="visual-settings" />
-    <CircosDisplay class="circos-display" />
+    <CircosDisplay class="circos-display flex-center" />
   </div>
 </template>
 

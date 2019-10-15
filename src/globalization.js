@@ -150,5 +150,13 @@ export const LOCALE_STRINGS = {
   VALUE: {
     en: "Value",
     fr: "Valeur"
+  },
+  CAPTURE_IMAGE: {
+    en: "Capture Chart Image",
+    fr: "Graphique Capturer l'image"
+  },
+  ADD_DEMO_DATA_SETS: {
+    en: "Add Demo Data Sets",
+    fr: "Ajouter des ensembles de données de démonstration"
   }
 };

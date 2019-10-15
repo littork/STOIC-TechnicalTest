@@ -32,6 +32,26 @@ function mapOperation(data, operation) {
   return workingResult;
 }
 
+function recursiveRequiredCheck(node) {
+  if (!node) {
+    return true;
+  }
+
+  if (node.required || node.from || node.to) {
+    return node.from.length && node.to.length;
+  }
+
+  let result = true;
+  for (let [operationName, subOperation] of Object.entries(node)) {
+    if (!recursiveRequiredCheck(subOperation)) {
+      result = false;
+      break;
+    }
+  }
+
+  return result;
+}
+
 const store = new Vuex.Store({
   state: {
     dataSets: [],
@@ -42,6 +62,21 @@ const store = new Vuex.Store({
     dataSetsUnderComputation: [],
     uniqueIdCounter: 0,
     language: "en"
+  },
+  getters: {
+    validDataSets: state => {
+      return state.dataSets.filter(dataSet => {
+        if (
+          !dataSet.transformations ||
+          !dataSet.transformations[1] ||
+          !dataSet.transformations[1].mapOperations
+        ) {
+          return true;
+        }
+
+        return recursiveRequiredCheck(dataSet.transformations[1].mapOperations);
+      });
+    }
   },
   mutations: {
     ["language.set"](state, language) {
@@ -103,6 +138,10 @@ const store = new Vuex.Store({
       Vue.set(state.dataSets[recomputeIndex], "computed", false);
     },
     ["dataset.push"](state, dataSet) {
+      if (dataSet.uniqueId === undefined) {
+        dataSet.uniqueId = ++state.uniqueIdCounter;
+      }
+
       state.dataSets.push(dataSet);
     },
     ["dataset.update"](state, { dataSet, index }) {
@@ -172,13 +211,18 @@ const store = new Vuex.Store({
                 return;
               }
 
-              workingData = workingData.map(d => {
-                let result = mapOperation(d, transformation.mapOperations);
-                /*console.log(
-                  `Result of map operation: ${JSON.stringify(result)}`
-                );*/
-                return result;
-              });
+              try {
+                workingData = workingData.map(d => {
+                  let result = mapOperation(d, transformation.mapOperations);
+                  /*console.log(
+                    `Result of map operation: ${JSON.stringify(result)}`
+                  );*/
+                  return result;
+                });
+              } catch (error) {
+                console.error(error);
+                return;
+              }
               /*console.log(
                 `Result of map operation: ${JSON.stringify(workingData)}`
               );*/
@@ -276,7 +320,10 @@ const store = new Vuex.Store({
           )}`
         );*/
         Vue.set(state.dataSets[datasetIndex], "data", workingData);
+        //console.log(workingData);
       }
+
+      Vue.set(state, "layoutData", []); // To assure new data changes are propagated
 
       Vue.set(state.dataSets[datasetIndex], "computed", true);
 
@@ -310,12 +357,16 @@ const store = new Vuex.Store({
         let parsedData;
         switch (payload.fileType.toLowerCase()) {
           case "json":
-            parsedData = await d3.json(payload.dataSet);
+            parsedData = payload.preParsed
+              ? payload.dataSet
+              : await d3.json(payload.dataSet);
 
             commit("dataset.update", {
               dataSet: {
                 parsedData,
-                rawData: payload.dataSet,
+                rawData: payload.preParsed
+                  ? JSON.stringify(parsedData)
+                  : payload.dataSet,
                 data: parsedData,
                 name: payload.name,
                 loading: false,

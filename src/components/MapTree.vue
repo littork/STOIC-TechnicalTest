@@ -4,6 +4,15 @@
       <v-expansion-panel v-for="(node, index) in nodes" v-bind:key="`${index}`">
         <v-expansion-panel-header>
           <span>{{ node.name.globalize[$l.lang()] }}</span>
+          <div class="flex-right pr-4">
+            <v-chip outlined color="blue" v-if="node.required">Required</v-chip>
+            <v-chip
+              outlined
+              color="green"
+              class="ml-4"
+              v-if="node.datatype === 'number' || node.control === 'number'"
+            >Number</v-chip>
+          </div>
         </v-expansion-panel-header>
         <v-expansion-panel-content>
           <div v-if="isType(node, 'string') || isType(node, 'identifier')">
@@ -87,11 +96,13 @@ export default {
         }
 
         switch (this.extractType(node)) {
+          case "number":
+            Vue.set(value[node.id], "toInt", true);
           case "identifier":
           case "string":
-          case "number":
             Vue.set(value[node.id], "from", "");
             Vue.set(value[node.id], "to", node.id);
+            Vue.set(value[node.id], "required", node.required);
             break;
           case "object":
             // Propogate preemptively to ensure this works

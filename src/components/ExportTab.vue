@@ -23,12 +23,17 @@
         :loading="importing"
       >{{ $l.go("IMPORT") }}</v-btn>
     </div>
+    <div class="ma-4" style="border: 1px solid rgba(0, 0, 0, 0.12)">
+      <v-btn tile depressed block @click.stop="captureImage()">{{ $l.go("CAPTURE_IMAGE") }}</v-btn>
+    </div>
     <a id="download" class="hidden"></a>
     <input id="import-input" type="file" accept=".json" class="hidden" @change="importChanged" />
   </div>
 </template>
 
 <script>
+import html2canvas from "html2canvas";
+
 export default {
   name: "ExportTab",
   data: () => ({
@@ -36,6 +41,19 @@ export default {
     importing: false
   }),
   methods: {
+    async captureImage() {
+      let captureCanvas = await html2canvas(document.getElementById("chart"));
+
+      let downloadElement = document.getElementById("download");
+      downloadElement.setAttribute(
+        "href",
+        captureCanvas
+          .toDataURL("image/png")
+          .replace("image/png", "image/octet-stream")
+      );
+      downloadElement.setAttribute("download", "chart.png");
+      downloadElement.click();
+    },
     async exportAll() {
       this.exporting = true;
 

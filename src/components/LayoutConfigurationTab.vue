@@ -10,7 +10,7 @@
       <v-select
         :items="simplifiedDatasets"
         v-model="layoutDataset"
-        outlined
+        filled
         hide-details
         class="ma-4"
         label="Dataset"
@@ -40,10 +40,18 @@ export default {
   }),
   watch: {
     layoutDataset(set) {
-      this.$store.commit(
-        "layout.data.set",
-        this.dataSets[this.dataSets.findIndex(data => data.name === set)]
-      );
+      let dataIndex = this.dataSets.findIndex(data => data.name === set);
+
+      if (dataIndex < 0) {
+        return;
+      }
+
+      this.$store.commit("layout.data.set", this.dataSets[dataIndex]);
+    },
+    layoutData(data) {
+      if (!data.length) {
+        this.layoutDataset = "";
+      }
     }
   },
   computed: {
@@ -58,9 +66,9 @@ export default {
         this.$store.commit("layoutConfiguration.set", v);
       }
     },
-    ...mapState(["dataSets"]),
+    ...mapState(["dataSets", "layoutData"]),
     simplifiedDatasets() {
-      return this.dataSets.map(set => set.name);
+      return this.$store.getters.validDataSets.map(set => set.name);
     }
   }
 };

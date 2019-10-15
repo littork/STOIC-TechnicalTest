@@ -31,6 +31,12 @@
             </div>
             <v-btn text @click.stop="remove(index)">{{ $l.go("REMOVE") }}</v-btn>
           </div>
+          <DataSetTransformations
+            :value="dataSet.transformations"
+            @change="processDatasetTransformationChange($event, index)"
+            @watchChange="markTransformationsNeedRecomputation(dataSet.uniqueId)"
+            class="hidden"
+          />
         </v-expansion-panel-header>
         <v-expansion-panel-content>
           <DataSetTransformations

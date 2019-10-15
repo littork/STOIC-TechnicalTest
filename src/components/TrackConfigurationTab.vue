@@ -67,7 +67,7 @@ export default {
       });
     },
     narrowedDatasets(track) {
-      return this.dataSets.filter(
+      return this.$store.getters.validDataSets.filter(
         set => set.transformations[1].mapTrackType === track.type
       );
     },

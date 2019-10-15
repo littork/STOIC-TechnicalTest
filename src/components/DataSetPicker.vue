@@ -24,6 +24,7 @@
                 <v-chip color="#1177cc" dark label small>{{ text }}</v-chip>
               </template>
             </v-file-input>
+            <v-btn depressed outlined @click="addDemoDataSets">{{ $l.go("ADD_DEMO_DATA_SETS") }}</v-btn>
           </v-container>
         </v-card-text>
         <v-card-actions>
@@ -46,6 +47,8 @@
 </template>
 
 <script>
+import * as d3 from "d3";
+
 export default {
   name: "DataSetPicker",
   data: () => ({
@@ -53,6 +56,37 @@ export default {
     dialog: false
   }),
   methods: {
+    async addDemoDataSets() {
+      [
+        "cytobands.csv",
+        "days-off.csv",
+        "electrical-consumption.csv",
+        "es.csv",
+        "fusion-genes.csv",
+        "ips.csv",
+        "segdup.csv",
+        "snp.density.1mb.txt",
+        "snp.density.250kb.txt",
+        "snp.density.txt"
+      ].forEach(v => {
+        this.$store.dispatch("addDataset", {
+          dataSet: `../../data/${v}`,
+          name: v,
+          fileType: v.substring(v.lastIndexOf(".") + 1)
+        });
+      });
+
+      ["GRCh37.json", "months.json"].forEach(v => {
+        this.$store.dispatch("addDataset", {
+          dataSet: require(`../../data/${v}`),
+          name: v,
+          fileType: v.substring(v.lastIndexOf(".") + 1),
+          preParsed: true
+        });
+      });
+
+      this.dialog = false;
+    },
     async readFiles() {
       let filePromises = [];
 
