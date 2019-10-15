@@ -36,7 +36,7 @@
               >
                 <v-text-field
                   :label="$l.go('KEY')"
-                  outlined
+                  filled
                   hide-details
                   :value="conditionItem.key"
                   @change="$set(conditionItem, 'key', $event)"
@@ -52,7 +52,7 @@
                 ></v-select>
                 <v-text-field
                   :label="$l.go('VALUE')"
-                  outlined
+                  filled
                   hide-details
                   :value="conditionItem.comparator"
                   @change="$set(conditionItem, 'comparator', $event)"
