@@ -24,7 +24,7 @@
                 <v-chip color="#1177cc" dark label small>{{ text }}</v-chip>
               </template>
             </v-file-input>
-            <v-btn depressed outlined @click="addDemoDataSets">{{ $l.go("ADD_DEMO_DATA_SETS") }}</v-btn>
+            <!-- <v-btn depressed outlined @click="addDemoDataSets">{{ $l.go("ADD_DEMO_DATA_SETS") }}</v-btn> -->
           </v-container>
         </v-card-text>
         <v-card-actions>
@@ -34,15 +34,6 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-
-    <!-- <input
-      ref="input"
-      type="file"
-      accept=".json, .csv, .txt"
-      class="hidden"
-      @change="referenceFiles"
-    />
-    <v-btn block @click="$refs.input.click()">Upload Data Set</v-btn>-->
   </div>
 </template>
 

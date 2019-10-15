@@ -7,7 +7,6 @@
     </v-list-item>
     <v-divider></v-divider>
     <div>
-      <!-- <FormTree :nodes="trackMetadata" v-model="tracks" /> -->
       <v-expansion-panels accordion>
         <v-expansion-panel
           v-for="(track, index) in tracks"
@@ -30,8 +29,16 @@
               filled
               label="Dataset"
               hide-details
+              :value="track.data ? track.data.name : ''"
               @change="setTrackDataset($event, index)"
             ></v-select>
+            <v-btn
+              tile
+              depressed
+              block
+              class="mt-4"
+              @click.stop="refreshTrackDataset(track)"
+            >Refresh</v-btn>
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
@@ -57,6 +64,9 @@ export default {
     },
     edit(index) {
       this.$refs.track_creator.edit({ index, track: this.tracks[index] });
+    },
+    refreshTrackDataset(track) {
+      track.data = undefined;
     },
     setTrackDataset(set, index) {
       this.$store.commit("tracks.set_data", {

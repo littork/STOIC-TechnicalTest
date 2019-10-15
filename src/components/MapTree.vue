@@ -53,7 +53,6 @@
           </div>
 
           <div v-else-if="isType(node, 'object')">
-            <!-- <v-divider /> -->
             <MapTree
               :value="value[node.id] || {}"
               @input="emitChange($event, node)"
@@ -85,7 +84,6 @@ export default {
   },
   created() {
     this.syncSchema();
-    //console.log(this.value);
   },
   methods: {
     syncSkeleton(nodes, value) {

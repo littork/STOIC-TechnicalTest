@@ -81,7 +81,6 @@ export default {
 
 <style lang="scss" scoped>
 .tab-item-wrapper {
-  /* vuetify sets the v-tabs__container height to 48px */
   height: calc(100vh - 65px);
 
   overflow: auto;
