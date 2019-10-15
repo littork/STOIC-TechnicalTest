@@ -20,8 +20,18 @@ const store = new Vuex.Store({
     uniqueIdCounter: 0
   },
   mutations: {
+    ["dataset.duplicate"](state, index) {
+      let duplicateDataset = JSON.parse(JSON.stringify(state.dataSets[index]));
+
+      duplicateDataset.name = `${duplicateDataset.name} (Copy)`;
+
+      Vue.set(state.dataSets, state.dataSets.length, duplicateDataset);
+    },
+    ["dataset.name.change"](state, payload) {
+      Vue.set(state.dataSets[payload.index], "name", payload.name);
+    },
     ["dataset.set_transformations"](state, payload) {
-      state.dataSets[payload.index].transformations = payload.change;
+      Vue.set(state.dataSets[payload.index], "transformations", payload.change);
     },
     ["layout.data.set"](state, data) {
       state.layoutData = data.data;
@@ -129,14 +139,22 @@ const store = new Vuex.Store({
                   workingData
                 )}`
               );*/
+
+              if (!transformation.mapOperations) {
+                return;
+              }
+
               workingData = workingData.map(d => {
                 let resultantObject = {};
 
                 transformation.mapOperations.forEach(mapOperation => {
-                  if (!mapOperation.from.length || !mapOperation.to.length) {
-                    throw `Invalid map operation: ${JSON.stringify(
-                      mapOperation
-                    )}`;
+                  if (
+                    !mapOperation.to ||
+                    !mapOperation.from ||
+                    !mapOperation.from.length ||
+                    !mapOperation.to.length
+                  ) {
+                    return d;
                   }
 
                   resultantObject[mapOperation.to] = mapOperation.toInt
@@ -157,6 +175,10 @@ const store = new Vuex.Store({
                   workingData
                 )}`
               );*/
+              if (!transformation.filterOperations) {
+                return;
+              }
+
               workingData = workingData.filter(d => {
                 let filterPositives = 0;
 
@@ -166,13 +188,15 @@ const store = new Vuex.Store({
                   }
 
                   if (
+                    !filterOperation.key ||
+                    !filterOperation.operation ||
                     !filterOperation.key.length ||
                     !filterOperation.operation.length ||
-                    !filterOperation.comparator.length
+                    !filterOperation.comparator.length ||
+                    !filterOperation.comparator
                   ) {
-                    throw `Invalid filter operation: ${JSON.stringify(
-                      filterOperation
-                    )}`;
+                    filterPositives++; // Allow data through if it is being filtered by something invalid
+                    return;
                   }
 
                   // "<", ">", "!=", "!==", "==", "==="
@@ -236,6 +260,7 @@ const store = new Vuex.Store({
             state.dataSets[datasetIndex]
           )}`
         );*/
+        Vue.set(state.dataSets[datasetIndex], "data", workingData);
       }
 
       Vue.set(state.dataSets[datasetIndex], "computed", true);

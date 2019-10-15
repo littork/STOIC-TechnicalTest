@@ -19,6 +19,10 @@
         <v-icon left>mdi-layers-triple</v-icon>
         <v-spacer />Tracks
       </v-tab>
+      <v-tab>
+        <v-icon left>mdi-export-variant</v-icon>
+        <v-spacer />Export
+      </v-tab>
 
       <v-tab-item class="tab-item-wrapper">
         <DataSetTab class="data-set-tab" />
@@ -29,6 +33,9 @@
       <v-tab-item class="tab-item-wrapper">
         <TrackConfigurationTab />
       </v-tab-item>
+      <v-tab-item class="tab-item-wrapper">
+        <ExportTab />
+      </v-tab-item>
     </v-tabs>
   </v-card>
 </template>
@@ -37,13 +44,15 @@
 import DataSetTab from "@/components/DataSetTab";
 import LayoutConfigurationTab from "@/components/LayoutConfigurationTab";
 import TrackConfigurationTab from "@/components/TrackConfigurationTab";
+import ExportTab from "@/components/ExportTab";
 
 export default {
   name: "VisualSettings",
   components: {
     DataSetTab,
     LayoutConfigurationTab,
-    TrackConfigurationTab
+    TrackConfigurationTab,
+    ExportTab
   }
 };
 </script>

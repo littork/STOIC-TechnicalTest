@@ -7,7 +7,12 @@
       >
         <v-expansion-panel-header>
           <v-progress-circular v-if="dataSet.loading" indeterminate />
-          <span v-else>{{ dataSet.name }}</span>
+          <span
+            contenteditable
+            @click.stop
+            @input="changeDatasetName($event, index)"
+            v-else
+          >{{ dataSet.name }}</span>
           <v-spacer />
           <div class="flex-right">
             <div class="flex-center pr-2" v-if="!dataSet.computed">
@@ -21,6 +26,9 @@
                 :loading="dataSetsUnderComputation.includes(dataSet.uniqueId)"
               >Sync</v-btn>
             </div>
+            <div class="flex-center pr-2" v-else-if="dataSet.data && !dataSet.data.length">
+              <v-chip class="py-4" outlined depressed small>Empty</v-chip>
+            </div>
             <v-btn text @click.stop="remove(index)">Remove</v-btn>
           </div>
         </v-expansion-panel-header>
@@ -30,6 +38,13 @@
             @change="processDatasetTransformationChange($event, index)"
             @watchChange="markTransformationsNeedRecomputation(dataSet.uniqueId)"
           />
+          <v-btn
+            tile
+            depressed
+            block
+            @click.stop="duplicateDataset(index)"
+            class="mt-4"
+          >Create Duplicate</v-btn>
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
@@ -49,12 +64,21 @@ export default {
   },
   computed: mapState(["dataSets", "dataSetsUnderComputation"]),
   methods: {
+    changeDatasetName(change, index) {
+      this.$store.commit("dataset.name.change", {
+        index,
+        name: change.target.textContent
+      });
+    },
     markTransformationsNeedRecomputation(uniqueId) {
       /*
         Whenever the user edits a transformation, we now have to recompute it at some point
         This function marks the dataset to be recomputed in the future
       */
       this.$store.commit("dataset.mark_recompute", uniqueId);
+    },
+    duplicateDataset(index) {
+      this.$store.commit("dataset.duplicate", index);
     },
     syncDataset(index) {
       this.$store.dispatch("syncDataset", index);
