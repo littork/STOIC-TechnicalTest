@@ -7,7 +7,6 @@
     </v-list-item>
     <v-divider></v-divider>
     <div>
-      <!-- <FormTree :nodes="trackMetadata" v-model="tracks" /> -->
       <v-expansion-panels accordion>
         <v-expansion-panel
           v-for="(track, index) in tracks"

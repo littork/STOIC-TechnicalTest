@@ -34,15 +34,6 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-
-    <!-- <input
-      ref="input"
-      type="file"
-      accept=".json, .csv, .txt"
-      class="hidden"
-      @change="referenceFiles"
-    />
-    <v-btn block @click="$refs.input.click()">Upload Data Set</v-btn>-->
   </div>
 </template>
 

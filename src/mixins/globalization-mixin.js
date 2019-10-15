@@ -4,7 +4,6 @@ import { LOCALE_STRINGS } from "@/globalization";
 
 export default {
   data: () => ({
-    savage: "x",
     globalization: {
       lang() {
         return store.state.language;

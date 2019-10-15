@@ -3,8 +3,6 @@ import Vuex from "vuex";
 
 import * as d3 from "d3";
 
-import datasetClassifier from "@/tools/dataset-classifier";
-
 import LayoutDefaults from "circos/layout-conf.js";
 
 Vue.use(Vuex);
@@ -17,12 +15,9 @@ function mapOperation(data, operation) {
       !subOperation.hasOwnProperty("from")
     ) {
       // Must be an object
-      //console.log(operation);
       workingResult[operationName] = mapOperation(data, subOperation);
       continue;
     }
-
-    //console.log(`Broke through: ${JSON.stringify(subOperation)}`);
 
     workingResult[operationName] = subOperation.toInt
       ? parseInt(data[subOperation.from])
@@ -181,9 +176,6 @@ const store = new Vuex.Store({
         }
       });
     },
-    ["dataset.classify"](state) {
-      // state.dataSets.track = datasetClassifier(state.dataSet);
-    },
     ["dataset.compute"](state, datasetIndex) {
       const targetUniqueId = state.dataSets[datasetIndex].uniqueId;
       if (state.dataSetsUnderComputation.includes(targetUniqueId)) {
@@ -203,12 +195,6 @@ const store = new Vuex.Store({
           switch (transformation.type) {
             case 0:
               // Map
-              /*console.log(
-                `Working data before map operation: ${JSON.stringify(
-                  workingData
-                )}`
-              );*/
-
               if (!transformation.mapOperations) {
                 return;
               }
@@ -216,26 +202,15 @@ const store = new Vuex.Store({
               try {
                 workingData = workingData.map(d => {
                   let result = mapOperation(d, transformation.mapOperations);
-                  /*console.log(
-                    `Result of map operation: ${JSON.stringify(result)}`
-                  );*/
                   return result;
                 });
               } catch (error) {
                 console.error(error);
                 return;
               }
-              /*console.log(
-                `Result of map operation: ${JSON.stringify(workingData)}`
-              );*/
               break;
             case 1:
               // Filter
-              /*console.log(
-                `Working data before filter operation: ${JSON.stringify(
-                  workingData
-                )}`
-              );*/
               if (!transformation.filterOperations) {
                 return;
               }
@@ -302,27 +277,14 @@ const store = new Vuex.Store({
                       }
                       break;
                   }
-
-                  /*resultantObject[filterOperation.to] = mapOperation.toInt
-                    ? parseInt(d[filterOperation.from])
-                    : d[mapOperation.from];*/
                 });
 
                 return filterPositives > 0;
               });
-              /*console.log(
-                `Result of filter operation: ${JSON.stringify(workingData)}`
-              );*/
               break;
           }
         });
-        /*console.log(
-          `Would be running computations on this thing: ${JSON.stringify(
-            state.dataSets[datasetIndex]
-          )}`
-        );*/
         Vue.set(state.dataSets[datasetIndex], "data", workingData);
-        //console.log(workingData);
       }
 
       Vue.set(state, "layoutData", []); // To ensure that new data changes are propagated
@@ -403,8 +365,6 @@ const store = new Vuex.Store({
         commit("dataset.remove", dataSetIndex);
         return;
       }
-
-      commit("dataset.classify");
     }
   }
 });

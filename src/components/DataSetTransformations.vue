@@ -131,7 +131,6 @@ export default {
         return this.value;
       },
       set(v) {
-        console.log(v);
         this.$emit("change", v);
       }
     },
@@ -158,9 +157,6 @@ export default {
     }
   },
   created() {
-    //console.log(tracksMetadataJSON.default);
-    //console.log(this.dataTransformationTemplates);
-
     this.addDefaultTransformations();
   },
   watch: {
@@ -235,12 +231,6 @@ export default {
 
       this.$emit("change", this.transformations);
     },
-    /*newTransformation() {
-      this.transformations.push({
-        type: 0
-      });
-      this.$emit("change", this.transformations);
-    },*/
     addDefaultTransformations() {
       if (this.transformations.length) {
         return;
