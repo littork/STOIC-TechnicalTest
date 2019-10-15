@@ -163,6 +163,8 @@ const store = new Vuex.Store({
     },
     ["dataset.remove"](state, index) {
       state.dataSets.splice(index, 1);
+
+      Vue.set(state, "layoutData", []); // To ensure that new data changes are propagated
     },
     ["dataset.deduplicate"](state) {
       // Remove duplicates + cleanup loading
@@ -323,7 +325,7 @@ const store = new Vuex.Store({
         //console.log(workingData);
       }
 
-      Vue.set(state, "layoutData", []); // To assure new data changes are propagated
+      Vue.set(state, "layoutData", []); // To ensure that new data changes are propagated
 
       Vue.set(state.dataSets[datasetIndex], "computed", true);
 

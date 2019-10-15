@@ -6,9 +6,14 @@
 </template>
 
 <script>
+import demoData from "@/demo.json";
+
 export default {
   mounted() {
     document.body.setAttribute("data-app", true);
+
+    // Load demo data
+    this.$store.replaceState(demoData);
   }
 };
 </script>
