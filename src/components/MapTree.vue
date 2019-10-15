@@ -21,7 +21,7 @@
               :value="value[node.id].from"
               @input="emitChange($event, node, 'from')"
               hide-details
-              outlined
+              filled
             ></v-text-field>
             <div class="py-2">{{$l.go("TO")}}</div>
             <v-text-field
