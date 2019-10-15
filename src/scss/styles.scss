@@ -1,0 +1,60 @@
+.hidden {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+:root {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+}
+
+.flex-grow-1 {
+  flex-grow: 1 !important;
+}
+
+.flex-right {
+  display: flex;
+
+  justify-content: flex-end;
+}
+
+.flex-center {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-horizontal {
+  display: flex;
+  flex-direction: row;
+}
+
+.v-expansion-panel::before {
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+}
+
+.escape-expansion-panel {
+  margin-left: -24px;
+  width: calc(100% + 48px);
+}
+
+.outlined-panel {
+  outline: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.top-shift {
+  margin-top: 1px;
+}
+
+.cursor-pointer {
+  cursor: pointer !important;
+}
+
+// $color-pack: to-upper-case($string: "");
+
+// @import "~vuetify/dist/vuetify.min.css";

@@ -1,5 +1,11 @@
 # stoic-technical
 
+## Route
+
+- [x] Time
+- [x] Features
+- [ ] Quality
+
 ## Info
 
-Added packages: Prettier
+This is a technical challenge completed for STOIC.
