@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="chart" v-show="layoutData.length"></div>
-    <h3 v-show="!layoutData.length" class="instruction">Select a layout dataset</h3>
+    <h3 v-show="!layoutData.length" class="instruction">{{ $l.go("SELECT_LAYOUT_DATASET") }}</h3>
   </div>
 </template>
 

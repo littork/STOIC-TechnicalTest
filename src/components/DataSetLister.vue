@@ -24,12 +24,12 @@
                 depressed
                 small
                 :loading="dataSetsUnderComputation.includes(dataSet.uniqueId)"
-              >Sync</v-btn>
+              >{{ $l.go("SYNC") }}</v-btn>
             </div>
             <div class="flex-center pr-2" v-else-if="dataSet.data && !dataSet.data.length">
-              <v-chip class="py-4" outlined depressed small>Empty</v-chip>
+              <v-chip class="py-4" outlined depressed small>{{ $l.go("EMPTY") }}</v-chip>
             </div>
-            <v-btn text @click.stop="remove(index)">Remove</v-btn>
+            <v-btn text @click.stop="remove(index)">{{ $l.go("REMOVE") }}</v-btn>
           </div>
         </v-expansion-panel-header>
         <v-expansion-panel-content>
@@ -44,7 +44,7 @@
             block
             @click.stop="duplicateDataset(index)"
             class="mt-4"
-          >Create Duplicate</v-btn>
+          >{{ $l.go("CREATE_DUPLICATE") }}</v-btn>
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>

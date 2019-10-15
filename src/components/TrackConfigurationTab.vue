@@ -2,7 +2,7 @@
   <div>
     <v-list-item>
       <v-list-item-content>
-        <v-list-item-title class="headline">Tracks</v-list-item-title>
+        <v-list-item-title class="headline">{{ $l.go("TAB_TRACKS") }}</v-list-item-title>
       </v-list-item-content>
     </v-list-item>
     <v-divider></v-divider>
@@ -20,13 +20,13 @@
               <div class="mr-6 flex-center" style="width: 96px;">
                 <v-chip label outlined>{{ track.type }}</v-chip>
               </div>
-              <v-btn text @click="edit(index)" small>Edit</v-btn>
-              <v-btn text @click="remove(index)" small>Remove</v-btn>
+              <v-btn text @click="edit(index)" small>{{ $l.go("EDIT") }}</v-btn>
+              <v-btn text @click="remove(index)" small>{{ $l.go("REMOVE") }}</v-btn>
             </div>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
             <v-select
-              :items="simplifiedDatasets"
+              :items="simplifiedDatasets(track)"
               filled
               label="Dataset"
               hide-details
@@ -59,17 +59,24 @@ export default {
       this.$refs.track_creator.edit({ index, track: this.tracks[index] });
     },
     setTrackDataset(set, index) {
-      this.$store.commit("tracks.setdata", {
-        data: this.dataSets[this.simplifiedDatasets.indexOf(set)],
+      this.$store.commit("tracks.set_data", {
+        data: this.dataSets[
+          this.simplifiedDatasets(this.tracks[index]).indexOf(set)
+        ],
         index
       });
+    },
+    narrowedDatasets(track) {
+      return this.dataSets.filter(
+        set => set.transformations[1].mapTrackType === track.type
+      );
+    },
+    simplifiedDatasets(track) {
+      return this.narrowedDatasets(track).map(set => set.name);
     }
   },
   computed: {
-    ...mapState(["tracks", "dataSets"]),
-    simplifiedDatasets() {
-      return this.dataSets.map(set => set.name);
-    }
+    ...mapState(["tracks", "dataSets"])
   }
 };
 </script>

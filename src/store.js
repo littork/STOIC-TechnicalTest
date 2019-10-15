@@ -9,6 +9,29 @@ import LayoutDefaults from "circos/layout-conf.js";
 
 Vue.use(Vuex);
 
+function mapOperation(data, operation) {
+  let workingResult = {};
+  for (let [operationName, subOperation] of Object.entries(operation)) {
+    if (
+      !subOperation.hasOwnProperty("to") ||
+      !subOperation.hasOwnProperty("from")
+    ) {
+      // Must be an object
+      //console.log(operation);
+      workingResult[operationName] = mapOperation(data, subOperation);
+      continue;
+    }
+
+    //console.log(`Broke through: ${JSON.stringify(subOperation)}`);
+
+    workingResult[operationName] = subOperation.toInt
+      ? parseInt(data[subOperation.from])
+      : data[subOperation.from];
+  }
+
+  return workingResult;
+}
+
 const store = new Vuex.Store({
   state: {
     dataSets: [],
@@ -17,9 +40,14 @@ const store = new Vuex.Store({
     tracks: [],
     trackNameCounter: 0,
     dataSetsUnderComputation: [],
-    uniqueIdCounter: 0
+    uniqueIdCounter: 0,
+    language: "en"
   },
   mutations: {
+    ["language.set"](state, language) {
+      console.info(`Switching to language: ${language}`);
+      state.language = language;
+    },
     ["dataset.duplicate"](state, index) {
       let duplicateDataset = JSON.parse(JSON.stringify(state.dataSets[index]));
 
@@ -36,7 +64,7 @@ const store = new Vuex.Store({
     ["layout.data.set"](state, data) {
       state.layoutData = data.data;
     },
-    ["tracks.setdata"](state, payload) {
+    ["tracks.set_data"](state, payload) {
       Vue.set(state.tracks[payload.index], "data", payload.data);
     },
     ["tracks.remove"](state, index) {
@@ -145,24 +173,11 @@ const store = new Vuex.Store({
               }
 
               workingData = workingData.map(d => {
-                let resultantObject = {};
-
-                transformation.mapOperations.forEach(mapOperation => {
-                  if (
-                    !mapOperation.to ||
-                    !mapOperation.from ||
-                    !mapOperation.from.length ||
-                    !mapOperation.to.length
-                  ) {
-                    return d;
-                  }
-
-                  resultantObject[mapOperation.to] = mapOperation.toInt
-                    ? parseInt(d[mapOperation.from])
-                    : d[mapOperation.from];
-                });
-
-                return resultantObject;
+                let result = mapOperation(d, transformation.mapOperations);
+                /*console.log(
+                  `Result of map operation: ${JSON.stringify(result)}`
+                );*/
+                return result;
               });
               /*console.log(
                 `Result of map operation: ${JSON.stringify(workingData)}`
@@ -296,6 +311,7 @@ const store = new Vuex.Store({
         switch (payload.fileType.toLowerCase()) {
           case "json":
             parsedData = await d3.json(payload.dataSet);
+
             commit("dataset.update", {
               dataSet: {
                 parsedData,
@@ -313,6 +329,7 @@ const store = new Vuex.Store({
           case "txt":
           case "csv":
             parsedData = await d3.csv(payload.dataSet);
+
             commit("dataset.update", {
               dataSet: {
                 parsedData,

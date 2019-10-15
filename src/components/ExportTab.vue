@@ -2,14 +2,26 @@
   <div>
     <v-list-item>
       <v-list-item-content>
-        <v-list-item-title class="headline">Export</v-list-item-title>
+        <v-list-item-title class="headline">{{ $l.go("EXPORT") }}</v-list-item-title>
       </v-list-item-content>
     </v-list-item>
     <v-divider />
     <div class="ma-4" style="border: 1px solid rgba(0, 0, 0, 0.12)">
-      <v-btn tile depressed block @click.stop="exportAll()" :loading="exporting">Export</v-btn>
+      <v-btn
+        tile
+        depressed
+        block
+        @click.stop="exportAll()"
+        :loading="exporting"
+      >{{ $l.go("EXPORT") }}</v-btn>
       <v-divider />
-      <v-btn tile depressed block @click.stop="importAll()" :loading="importing">Import</v-btn>
+      <v-btn
+        tile
+        depressed
+        block
+        @click.stop="importAll()"
+        :loading="importing"
+      >{{ $l.go("IMPORT") }}</v-btn>
     </div>
     <a id="download" class="hidden"></a>
     <input id="import-input" type="file" accept=".json" class="hidden" @change="importChanged" />

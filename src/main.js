@@ -6,6 +6,9 @@ import vuetify from "./plugins/vuetify";
 
 Vue.config.productionTip = false;
 
+import globalizationMixin from "@/mixins/globalization-mixin";
+Vue.mixin(globalizationMixin);
+
 new Vue({
   router,
   store,

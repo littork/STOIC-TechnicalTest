@@ -2,11 +2,13 @@
   <div>
     <v-dialog v-model="dialog" persistent max-width="600px">
       <template v-slot:activator="{}">
-        <v-btn tile depressed block @click="showDialog">Add Track</v-btn>
+        <v-btn tile depressed block @click="showDialog">{{ $l.go("ADD_TRACK") }}</v-btn>
       </template>
       <v-card>
         <v-card-title>
-          <span class="headline">{{ editing ? "Edit" : "Add New" }} Track</span>
+          <span
+            class="headline"
+          >{{ editing ? $l.go("EDIT") : $l.go("ADD_NEW") }} {{ $l.go("TAB_TRACKS") }}</span>
         </v-card-title>
         <v-card-text>
           <v-container>
@@ -20,9 +22,9 @@
         </v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
-          <v-btn color="blue darken-1" text @click="close">Close</v-btn>
-          <v-btn color="blue darken-1" text @click="editTrack" v-if="editing">Edit</v-btn>
-          <v-btn color="blue darken-1" text @click="createTrack" v-else>Create</v-btn>
+          <v-btn color="blue darken-1" text @click="close">{{ $l.go("CLOSE") }}</v-btn>
+          <v-btn color="blue darken-1" text @click="editTrack" v-if="editing">{{ $l.go("EDIT") }}</v-btn>
+          <v-btn color="blue darken-1" text @click="createTrack" v-else>{{ $l.go("CREATE") }}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -52,16 +54,16 @@ export default {
       get() {
         return {
           trackType:
-            this.tracksMetadata[this.selectedTrackType].name.globalize.en ||
-            "Chords",
+            this.tracksMetadata[this.selectedTrackType].name.globalize[
+              this.$l.lang()
+            ] || "Chords",
           id: this.tracksMetadata[this.selectedTrackType].id || "chords"
         };
       },
       set(v) {
         this.track = {};
-        // TODO This NEEDS to be redone before globalization is added
         this.selectedTrackType = this.tracksMetadata.findIndex(
-          track => track.name.globalize.en === v.trackType
+          track => track.name.globalize[this.$l.lang()] === v.trackType
         );
       }
     },
@@ -74,7 +76,8 @@ export default {
           id: "trackType",
           name: {
             globalize: {
-              en: "Track Type"
+              en: "Track Type",
+              fr: "Type de piste"
             }
           },
           datatype: "dropdown",

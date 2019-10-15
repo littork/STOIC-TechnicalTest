@@ -2,20 +2,20 @@
   <div>
     <v-dialog v-model="dialog" persistent max-width="600px">
       <template v-slot:activator="{ on }">
-        <v-btn tile depressed block v-on="on">Upload Data Set</v-btn>
+        <v-btn tile depressed block v-on="on">{{ $l.go("UPLOAD_DATA_SET") }}</v-btn>
       </template>
       <v-card>
         <v-card-title>
-          <span class="headline">Upload Data Sets</span>
+          <span class="headline">{{ $l.go("UPLOAD_DATA_SETS") }}</span>
         </v-card-title>
         <v-card-text>
           <v-container>
             <v-file-input
               v-model="files"
               counter
-              label="Dataset input"
+              :label="$l.go('DATASET_INPUT')"
               multiple
-              placeholder="Select your data sets"
+              :placeholder="$l.go('SELECT_DATA_SETS')"
               prepend-icon="mdi-paperclip"
               outlined
               :show-size="1000"
@@ -28,8 +28,8 @@
         </v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
-          <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
-          <v-btn color="blue darken-1" text @click="uploadFiles">Upload</v-btn>
+          <v-btn color="blue darken-1" text @click="dialog = false">{{ $l.go("CLOSE") }}</v-btn>
+          <v-btn color="blue darken-1" text @click="uploadFiles">{{ $l.go("UPLOAD") }}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

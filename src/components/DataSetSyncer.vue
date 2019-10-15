@@ -2,7 +2,7 @@
   <div>
     <v-divider />
     <v-alert class="ma-4" border="left" color="red" dark outlined v-if="dataSetsComputed">
-      There are data sets with uncomputed transformations. Data sets must be computed before they can be used.
+      {{ $l.go("UNCOMPUTED_TRANSFORMATIONS") }}
       <br />
       <v-btn
         class="mt-4"
@@ -10,7 +10,7 @@
         depressed
         :loading="dataSetsComputing"
         @click="$store.dispatch('syncAllDatasets')"
-      >Compute Now</v-btn>
+      >{{ $l.go("COMPUTE_NOW") }}</v-btn>
     </v-alert>
   </div>
 </template>

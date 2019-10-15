@@ -5,14 +5,14 @@
         <v-checkbox
           :input-value="value[node.id]"
           @change="emitChange($event, node)"
-          :label="node.name.globalize.en"
+          :label="node.name.globalize[$l.lang()]"
           color="blue"
           inset
         ></v-checkbox>
       </div>
       <div v-else-if="isType(node, 'integer')">
         <v-text-field
-          :label="node.name.globalize.en"
+          :label="node.name.globalize[$l.lang()]"
           :value="value[node.id]"
           @change="emitChange($event, node)"
           filled
@@ -20,7 +20,7 @@
       </div>
       <div v-else-if="isType(node, 'number')">
         <v-text-field
-          :label="node.name.globalize.en"
+          :label="node.name.globalize[$l.lang()]"
           :value="value[node.id]"
           @change="emitChange($event, node)"
           filled
@@ -28,7 +28,7 @@
       </div>
       <div v-else-if="isType(node, 'color') || isType(node, 'palette')">
         <div class="form-flex-container color-container">
-          <div class="form-element-label">{{ node.name.globalize.en }}</div>
+          <div class="form-element-label">{{ node.name.globalize[$l.lang()] }}</div>
           <v-spacer />
           <v-color-picker
             class="mx-auto color-picker"
@@ -41,16 +41,16 @@
       </div>
       <div v-else-if="isType(node, 'expression')">
         <v-text-field
-          :label="node.name.globalize.en"
+          :label="node.name.globalize[$l.lang()]"
           :value="value[node.id]"
-          :placeholder="node.name.globalize.en"
+          :placeholder="node.name.globalize[$l.lang()]"
           @change="emitChange($event, node)"
           filled
         ></v-text-field>
       </div>
       <div v-else-if="isType(node, 'category') && categoryNodeLengthSmall(node)">
         <div class="form-flex-container category-container">
-          <div class="form-element-label">{{ node.name.globalize.en }}</div>
+          <div class="form-element-label">{{ node.name.globalize[$l.lang()] }}</div>
           <v-spacer />
           <v-btn-toggle
             borderless
@@ -65,7 +65,7 @@
               :value="category.id"
               :disabled="node.options.categories.length <= 1"
             >
-              <span class="hidden-sm-and-down">{{ category.name.globalize.en }}</span>
+              <span class="hidden-sm-and-down">{{ category.name.globalize[$l.lang()] }}</span>
             </v-btn>
           </v-btn-toggle>
         </div>
@@ -78,11 +78,11 @@
           :items="simplifyCategories(node.options.categories)"
           :value="value[node.id]"
           outlined
-          :label="node.name.globalize.en"
+          :label="node.name.globalize[$l.lang()]"
         />
       </div>
       <div v-else-if="isType(node, 'object') || isType(node, 'collection')">
-        <div class="form-section-label">{{ node.name.globalize.en }}</div>
+        <div class="form-section-label">{{ node.name.globalize[$l.lang()] }}</div>
         <FormTree
           class="internal-form"
           :value="value[node.id] || {}"
@@ -142,7 +142,8 @@ export default {
               break;
             }
           case "dropdown":
-            value[node.id] = node.options.categories[0].name.globalize.en;
+            value[node.id] =
+              node.options.categories[0].name.globalize[this.$l.lang()];
             break;
           case "object":
           case "collection":
@@ -178,17 +179,14 @@ export default {
     findNodeLength(node) {
       // Just use a select if there are a bunch of options
       return node.options.categories.reduce(
-        (acc, category) => acc + category.name.globalize.en.length,
+        (acc, category) => acc + category.name.globalize[this.$l.lang()].length,
         0
       );
     },
     emitChange(event, node) {
-      // TODO: How can this be made more efficient?
-      let newValue = JSON.parse(JSON.stringify(this.value));
-
-      newValue[node.id] = event || false;
-
-      this.$emit("input", newValue);
+      // We modify value directly here, which saves us from having to duplicate it
+      this.value[node.id] = event || false;
+      this.$emit("input", this.value);
     },
     extractType(node) {
       return node.datatype || node.control;
@@ -197,7 +195,9 @@ export default {
       return this.extractType(node) === type;
     },
     simplifyCategories(categories) {
-      return categories.map(category => category.name.globalize.en);
+      return categories.map(
+        category => category.name.globalize[this.$l.lang()]
+      );
     }
   }
 };

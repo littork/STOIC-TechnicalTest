@@ -28,7 +28,7 @@ export default {
 
 .visual-settings {
   width: min-content;
-  min-width: 600px;
+  min-width: 700px;
 
   height: 100vh;
 

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h5 class="pb-3">Transformations</h5>
+    <h5 class="pb-3">{{ $l.go("TRANSFORMATIONS") }}</h5>
     <div class="outlined-panel">
       <v-expansion-panels accordion>
         <v-expansion-panel
@@ -9,135 +9,159 @@
         >
           <v-expansion-panel-header>
             <span>{{ transformationTypeNames[transformation.type] }}</span>
-            <v-spacer />
-            <div class="flex-right">
-              <v-btn text @click.stop="removeTransformation(index)">Remove</v-btn>
-            </div>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
-            <v-tabs
-              @change="changeTransformationType($event, index)"
-              background-color="#e5e5e5"
-              class="escape-expansion-panel"
-              style="height: max-content; min-height: 116px;"
-            >
-              <v-tabs-slider></v-tabs-slider>
-              <v-tab
-                v-for="(transformType, typeIndex) in transformationTypeNames"
-                v-bind:key="typeIndex"
-              >{{ transformType }}</v-tab>
-              <v-tab-item>
-                <div class="px-4 pt-6">
-                  <div
-                    class="flex-horizontal pb-4"
-                    v-for="(mapItem, mapItemIndex) in transformation.mapOperations"
-                    v-bind:key="`${mapItemIndex}`"
-                  >
-                    <v-tooltip bottom>
-                      <template v-slot:activator="{ on }">
-                        <v-checkbox
-                          :value="mapItem.toInt"
-                          @change="$set(mapItem, 'toInt', $event)"
-                          v-on="on"
-                          class="checkbox-padder pr-2"
-                        />
-                      </template>
-                      <span>Convert to Integer</span>
-                    </v-tooltip>
-                    <v-text-field
-                      label="From Key"
-                      outlined
-                      hide-details
-                      :value="mapItem.from"
-                      @change="$set(mapItem, 'from', $event)"
-                    />
-                    <div class="map-to-text px-4">to</div>
-                    <v-text-field
-                      label="To Key"
-                      outlined
-                      hide-details
-                      :value="mapItem.to"
-                      @change="$set(mapItem, 'to', $event)"
-                    />
-                    <div class="ml-4 flex-center" style="height: 56px;">
-                      <v-btn text @click="deleteMapPiece(index, mapItemIndex)" color="red">Delete</v-btn>
-                    </div>
-                  </div>
-                  <v-btn tile depressed block @click="newMapPiece(index)">Add New Map Element</v-btn>
-                </div>
-              </v-tab-item>
-              <v-tab-item>
-                <div class="px-4 pt-6">
-                  <div
-                    class="flex-horizontal pb-4"
-                    v-for="(conditionItem, conditionItemIndex) in transformation.filterOperations"
-                    v-bind:key="`${conditionItemIndex}`"
-                  >
-                    <v-text-field
-                      label="Key"
-                      outlined
-                      hide-details
-                      :value="conditionItem.key"
-                      @change="$set(conditionItem, 'key', $event)"
-                    />
-                    <!-- <div class="map-to-text px-4">{{'<>'}}</div> -->
-                    <v-select
-                      :items="conditions"
-                      :value="conditionItem.operation"
-                      @change="$set(conditionItem, 'operation', $event)"
-                      outlined
-                      class="px-2"
-                    ></v-select>
-                    <v-text-field
-                      label="Value"
-                      outlined
-                      hide-details
-                      :value="conditionItem.comparator"
-                      @change="$set(conditionItem, 'comparator', $event)"
-                    />
-                    <div class="ml-4 flex-center" style="height: 56px;">
-                      <v-btn
-                        text
-                        @click="deleteFilterCondition(index, conditionItemIndex)"
-                        color="red"
-                      >Delete</v-btn>
-                    </div>
-                  </div>
+            <div class="px-4 pt-3" v-if="transformation.type === 0">
+              <v-select
+                :items="trackTypeNames"
+                :value="transformation.mapTrackType"
+                @change="changeTargetTrack(transformation, $event)"
+                label="Target Track"
+                filled
+                hide-details
+                class="px-2"
+              ></v-select>
+              <MapTree
+                :nodes="activeMapNode(transformation)"
+                v-model="transformation.mapOperations"
+                v-if="transformation.mapTrackType !== 'Pre-defined'"
+                class="mt-8"
+              />
+            </div>
+            <div class="px-4 pt-3" v-if="transformation.type === 1">
+              <div
+                class="flex-horizontal pb-4"
+                v-for="(conditionItem, conditionItemIndex) in transformation.filterOperations"
+                v-bind:key="`${conditionItemIndex}`"
+              >
+                <v-text-field
+                  :label="$l.go('KEY')"
+                  outlined
+                  hide-details
+                  :value="conditionItem.key"
+                  @change="$set(conditionItem, 'key', $event)"
+                />
+                <!-- <div class="map-to-text px-4">{{'<>'}}</div> -->
+                <v-select
+                  :items="conditions"
+                  :value="conditionItem.operation"
+                  @change="$set(conditionItem, 'operation', $event)"
+                  outlined
+                  hide-details
+                  class="px-2"
+                ></v-select>
+                <v-text-field
+                  :label="$l.go('VALUE')"
+                  outlined
+                  hide-details
+                  :value="conditionItem.comparator"
+                  @change="$set(conditionItem, 'comparator', $event)"
+                />
+                <div class="ml-4 flex-center" style="height: 56px;">
                   <v-btn
-                    tile
-                    depressed
-                    block
-                    @click="newFilterCondition(index)"
-                  >Add New Filter Condition</v-btn>
+                    text
+                    @click="deleteFilterCondition(index, conditionItemIndex)"
+                    color="red"
+                    icon
+                  >
+                    <v-icon>mdi-close</v-icon>
+                  </v-btn>
                 </div>
-              </v-tab-item>
-            </v-tabs>
+              </div>
+              <v-btn
+                tile
+                depressed
+                block
+                @click="newFilterCondition(index)"
+              >{{ $l.go("ADD_NEW_FILTER_CONDITION") }}</v-btn>
+            </div>
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
-      <v-divider v-if="transformations.length" />
-      <v-btn tile depressed block @click.stop="newTransformation">Add New Transformation</v-btn>
     </div>
+    <v-dialog v-model="templateDialog" persistent max-width="600px">
+      <v-card>
+        <v-card-title>
+          <span class="headline">{{ $l.go("MAP_TRANSFORMATION_TEMPLATES") }}</span>
+        </v-card-title>
+        <v-card-text>
+          <v-container>
+            {{ $l.go("SELECT_BASED_TEMPLATES") }}
+            <v-banner
+              v-for="(transformationTemplate, index) in dataTransformationTemplates"
+              v-bind:key="index"
+            ></v-banner>
+          </v-container>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn text @click="templateDialog = false">{{ $l.go("CLOSE") }}</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
 <script>
 import Vue from "vue";
 
+import * as tracksMetadataJSON from "@/circos.tracks.json";
+
+import MapTree from "@/components/MapTree";
+
 export default {
   name: "DataSetTransformations",
   data: () => ({
-    transformationTypeNames: ["Map", "Or Filter"],
     transformationTypes: [],
-    conditions: ["<", ">", "!=", "!==", "==", "==="]
+    conditions: ["<", ">", "!=", "!==", "==", "==="],
+    templateDialog: false
   }),
+  components: {
+    MapTree
+  },
   props: {
     value: { type: Array, default: () => [] }
   },
   computed: {
-    transformations() {
-      return this.value;
+    transformationTypeNames() {
+      return [this.$l.go("DATA_MAPPINGS"), this.$l.go("OR_FILTERS")];
+    },
+    transformations: {
+      get() {
+        return this.value;
+      },
+      set(v) {
+        console.log(v);
+        this.$emit("change", v);
+      }
+    },
+    dataTransformationTemplates() {
+      return tracksMetadataJSON.default.map(v => {
+        let maps = [];
+
+        v.data.forEach(dataPiece => {
+          maps.push({
+            to: dataPiece.id
+          });
+        });
+
+        return maps;
+      });
+    },
+    trackTypeNames() {
+      return ["Pre-defined"].concat(
+        this.tracksMetadata.map(track => track.name.globalize[this.$l.lang()])
+      );
+    },
+    tracksMetadata() {
+      return tracksMetadataJSON.default;
     }
+  },
+  created() {
+    //console.log(tracksMetadataJSON.default);
+    //console.log(this.dataTransformationTemplates);
+
+    this.addDefaultTransformations();
   },
   watch: {
     transformations: {
@@ -148,6 +172,23 @@ export default {
     }
   },
   methods: {
+    changeTargetTrack(transformation, event) {
+      this.$set(transformation, "mapTrackType", event);
+      this.$set(
+        transformation,
+        "mapOperations",
+        event === this.trackTypeNames[0] ? undefined : {}
+      );
+    },
+    activeMapNode(transformation) {
+      return this.tracksMetadata[
+        this.tracksMetadata.findIndex(
+          track =>
+            track.name.globalize.en === transformation.mapTrackType ||
+            track.name.globalize.fr === transformation.mapTrackType
+        )
+      ].data;
+    },
     newFilterCondition(transformationIndex) {
       if (!this.transformations[transformationIndex].filterOperations) {
         Vue.set(
@@ -194,13 +235,26 @@ export default {
 
       this.$emit("change", this.transformations);
     },
-    changeTransformationType(newType, index) {
-      Vue.set(this.transformations[index], "type", newType);
-      this.$emit("change", this.transformations);
-    },
-    newTransformation() {
+    /*newTransformation() {
       this.transformations.push({
         type: 0
+      });
+      this.$emit("change", this.transformations);
+    },*/
+    addDefaultTransformations() {
+      if (this.transformations.length) {
+        return;
+      }
+
+      this.transformations.push({
+        // Filters
+        type: 1
+      });
+      this.transformations.push({
+        // Maps
+        type: 0,
+        mapOperations: {},
+        mapTrackType: this.trackTypeNames[1]
       });
       this.$emit("change", this.transformations);
     },
@@ -213,10 +267,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.outlined-panel {
-  outline: 1px solid rgba(0, 0, 0, 0.12);
-}
-
 .map-to-text {
   display: flex;
   align-items: center;

@@ -2,7 +2,7 @@
   <div>
     <v-list-item>
       <v-list-item-content>
-        <v-list-item-title class="headline">Layout</v-list-item-title>
+        <v-list-item-title class="headline">{{ $l.go("TAB_LAYOUT") }}</v-list-item-title>
       </v-list-item-content>
     </v-list-item>
     <v-divider />
