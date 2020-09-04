@@ -14,7 +14,7 @@
     "d3": "^5.12.0",
     "eslint-config-prettier": "^6.4.0",
     "html2canvas": "^1.0.0-rc.5",
-    "papaparse": "^5.1.0",
+    "papaparse": "^5.2.0",
     "vue": "^2.6.10",
     "vue-router": "^3.0.3",
     "vuedraggable": "^2.23.2",
